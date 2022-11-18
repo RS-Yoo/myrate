@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using myrate_backend.Models;
 
 namespace myrate_backend.Controllers
 {

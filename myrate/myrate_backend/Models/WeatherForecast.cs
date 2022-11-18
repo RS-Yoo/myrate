@@ -1,4 +1,4 @@
-namespace myrate_backend
+namespace myrate_backend.Models
 {
     public class WeatherForecast
     {
