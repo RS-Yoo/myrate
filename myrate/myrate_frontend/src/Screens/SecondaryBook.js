@@ -8,7 +8,7 @@ const SecondaryBook = () => {
     const location = useLocation();
     const { bookDetails } = location.state;
     const { image, bookTitle, bookAuthor, publisher, isbn_10, isbn_13, description, purchaseLinks } = bookDetails.book;
-    axios.post('https://localhost:7011/api/Media/SaveBook', {
+    axios.post('https://localhost:7011/api/media', {
         title: bookTitle,
         author: bookAuthor,
         desc: description,

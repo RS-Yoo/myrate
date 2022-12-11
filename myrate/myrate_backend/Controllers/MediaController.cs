@@ -6,7 +6,7 @@ using myrate_backend.Models;
 namespace myrate_backend.Controllers
 {
     [EnableCors("AllowAllOrigins")]
-    [Route("api/{controller}")]
+    [Route("api/media")]
     [ApiController]
     public class MediaController : Controller
     {
@@ -18,7 +18,7 @@ namespace myrate_backend.Controllers
 
         
         [HttpPost]
-        [Route("/SaveBook")]
+        //[Route("/SaveBook")]
         public async Task<IActionResult> SaveBook([FromBody] string title, string author, string desc, string publisher, string ISBN10, string ISBN13)
         {
             // first check if the book is already in db
