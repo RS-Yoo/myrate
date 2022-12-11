@@ -6,7 +6,7 @@ using myrate_backend.Models;
 namespace myrate_backend.Controllers
 {
     [EnableCors("AllowAllOrigins")]
-    [Route("api/[controller]")]
+    [Route("api/{controller}")]
     [ApiController]
     public class MediaController : Controller
     {
