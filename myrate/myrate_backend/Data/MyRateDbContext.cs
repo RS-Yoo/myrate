@@ -21,6 +21,7 @@ namespace myrate_backend.Data
         public DbSet<Movie> Movies { get; set; }
         public DbSet<TVShow> TvShows { get; set; }
         public DbSet<Music> Musics { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
         //public DbSet<Rating> Ratings { get; set; }
 
         public async Task SeedData()
