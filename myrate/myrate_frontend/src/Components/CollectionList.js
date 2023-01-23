@@ -16,9 +16,12 @@ const CollectionList = () => {
 
     // Fetch collection data of this user from the backend
 
-    //useEffect(() => {
-    //    axios.get('http://localhost:5001/api/media/savebook/')
-    //}, []);
+    useEffect(() => {
+        axios.get('http://localhost:5001/api/collections/getcollections/')
+            .then(function (response) {
+                console.log(response)
+            });
+    }, []);
 
 
     return (

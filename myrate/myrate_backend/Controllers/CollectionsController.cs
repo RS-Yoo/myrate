@@ -18,7 +18,8 @@ namespace myrate_backend.Controllers
         public async Task<IActionResult> GetCollections()
         {
             // TODO: Get user from DB in the future
-            return Ok(new { success = true });
+            var collections = _context.Set<MediaCollection>();
+            return Ok(new { success = true, res = collections });
         }
     }
 }
