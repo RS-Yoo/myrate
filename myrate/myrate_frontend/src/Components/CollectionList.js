@@ -19,7 +19,7 @@ const CollectionList = () => {
     useEffect(() => {
         axios.get('http://localhost:5001/api/collections/getcollections/')
             .then(function (response) {
-                console.log(response)
+                console.log(response.data.res)
             });
     }, []);
 
