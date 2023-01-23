@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using myrate_backend.Areas.Data;
 using myrate_backend.Models;
 
@@ -21,18 +22,25 @@ namespace myrate_backend.Data
         public DbSet<Movie> Movies { get; set; }
         public DbSet<TVShow> TvShows { get; set; }
         public DbSet<Music> Musics { get; set; }
+        public DbSet<MediaCollection> Collections { get; set; }
         //public DbSet<Rating> Ratings { get; set; }
 
         public async Task SeedData()
         {
             // Check if already done
-            if (Users.Any() && Books.Any() && Movies.Any() && TvShows.Any() && Musics.Any())
+            if (Users.Any() && Books.Any() && Movies.Any() && TvShows.Any() && Musics.Any() && Collections.Any())
             {
                 return;
             }
             // migrate
             Database.Migrate();
-            
+
+            // Lists for collections
+            List<Book> books = new();
+            List<Movie> movies = new();
+            List<TVShow> shows = new();
+            List<Music> musics = new();
+
             // Build Users
             var u1 = CreateUser();
             var u2 = CreateUser();
@@ -107,6 +115,12 @@ namespace myrate_backend.Data
             mo4.Director = "D4";
             mo5.Director = "D5";
 
+            movies.Add(mo1);
+            movies.Add(mo2);
+            movies.Add(mo3);
+            movies.Add(mo4);
+            movies.Add(mo5);
+
             await Movies.AddAsync(mo1);
             await Movies.AddAsync(mo2);
             await Movies.AddAsync(mo3);
@@ -150,6 +164,12 @@ namespace myrate_backend.Data
             tv4.Summary = "";
             tv5.Summary = "";
 
+            shows.Add(tv1);
+            shows.Add(tv2);
+            shows.Add(tv3);
+            shows.Add(tv4);
+            shows.Add(tv5);
+
             await TvShows.AddAsync(tv1);
             await TvShows.AddAsync(tv2);
             await TvShows.AddAsync(tv3);
@@ -180,6 +200,12 @@ namespace myrate_backend.Data
             mu3.Genre = "Rock";
             mu4.Genre = "Classical";
             mu5.Genre = "Country";
+
+            musics.Add(mu1);
+            musics.Add(mu2);
+            musics.Add(mu3);
+            musics.Add(mu4);
+            musics.Add(mu5);
 
             await Musics.AddAsync(mu1);
             await Musics.AddAsync(mu2);
@@ -218,11 +244,51 @@ namespace myrate_backend.Data
             b4.Summary = "";
             b5.Summary = "";
 
+            books.Add(b1);
+            books.Add(b2);
+            books.Add(b3);
+            books.Add(b4);
+            books.Add(b5);
+
             await Books.AddAsync(b1);
             await Books.AddAsync(b2);
             await Books.AddAsync(b3);
             await Books.AddAsync(b4);
             await Books.AddAsync(b5);
+
+            // Build Collections
+            var coll1 = CreateCollection();
+            var coll2 = CreateCollection();
+            var coll3 = CreateCollection();
+            var coll4 = CreateCollection();
+            var coll5 = CreateCollection();
+
+            coll1.Name = "Sample1";
+            coll2.Name = "Sample2";
+            coll3.Name = "Sample3";
+            coll4.Name = "Sample4";
+            coll5.Name = "Sample5";
+
+            coll1.Description = "This is Sample1";
+            coll2.Description = "This is Sample2";
+            coll3.Description = "This is Sample3";
+            coll4.Description = "This is Sample4";
+            coll5.Description = "This is Sample5";
+
+            coll1.Books = books;
+            coll2.Movies = movies;
+            coll3.TvShows = shows;
+            coll4.Songs = musics;
+            coll5.Books = books;
+            coll5.Movies = movies;
+            coll5.TvShows = shows;
+            coll5.Songs = musics;
+
+            await Collections.AddAsync(coll1);
+            await Collections.AddAsync(coll2);
+            await Collections.AddAsync(coll3);
+            await Collections.AddAsync(coll4);
+            await Collections.AddAsync(coll5);
 
             await SaveChangesAsync();
         }
@@ -298,6 +364,21 @@ namespace myrate_backend.Data
                 throw new InvalidOperationException($"Can't create an instance of '{nameof(Music)}'. " +
                     $"Ensure that '{nameof(Music)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
+            }
+        }
+
+        //Collection
+        public MediaCollection CreateCollection()
+        {
+            try
+            {
+                return Activator.CreateInstance<MediaCollection>();
+            }
+            catch
+            {
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(MediaCollection)}'. " +
+                $"Ensure that '{nameof(MediaCollection)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
     }
