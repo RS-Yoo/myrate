@@ -6,6 +6,7 @@ import MyStats from "./Screens/MyStats";
 import SecondaryBook from "./Screens/SecondaryBook";
 import SecondaryMovie from "./Screens/SecondaryMovie";
 import SecondaryTV from "./Screens/SecondaryTV";
+import Profile from "./Screens/Profile";
 import {
     BrowserRouter as Router,
     Routes,
@@ -82,6 +83,7 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<Landing />} />
                 <Route path="/home" element={<Landing /> } />
+                <Route path="/profile" element={<Profile />} />
                 <Route path="/discover" element={<Discover />} />
                 <Route path="/collections" element={<Collections />} />
                 <Route path="/mystats" element={<MyStats />} />
