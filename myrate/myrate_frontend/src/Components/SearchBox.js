@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useAxiosGoogleBooks from "../Hooks/useAxiosGoogleBooks";
 import useAxiosLibraryBooks from "../Hooks/useAxiosLibraryBooks";
-import { Link } from "react-router-dom";
-import useAxiosTMDB from "../Hooks/useAxiosTMDB";
+import useAxiosTMDBSearch from "../Hooks/useAxiosTMDBSearch";
 import "./TrendingMovies.css";
 import Dropdown from 'react-bootstrap/Dropdown';
 import "./SearchBox.css";
@@ -30,11 +29,28 @@ const SearchBox = (timeFrame, count) => {
             setShowDrop(true);
     };
 
+    const { responsem, loadingm, errorm } = useAxiosTMDBSearch({
+        method: 'get',
+        url: `search/movie`,
+        query: searchEntry,
+        sortByPopularity: true,
+        responseLength: 5,
+    });
+
+    const { responset, loadingt, errort } = useAxiosTMDBSearch({
+        method: 'get',
+        url: `search/tv`,
+        query: searchEntry,
+        sortByPopularity: true,
+        responseLength: 5,
+      });
+
+
     const { response, loading, error } = useAxiosGoogleBooks({
         method: 'get',
         searchterms: searchEntry,
         specify_type : 'q',
-        responseLength: 10,
+        responseLength: 5,
     });
 
     const { responseb, loadingb, errorb } = useAxiosLibraryBooks({
@@ -42,12 +58,22 @@ const SearchBox = (timeFrame, count) => {
         key: searchKey,
     });
 
+
     async function findBook (inputKey, author, pub) {
         setSearchKey(inputKey);
         console.log("beresponse: " + responseb);
         secondfindbook(author, pub);     
 
     }
+
+    function findMovie(movie)
+    {
+        navigate(`/secondary-movie-page/${movie['id']}`, {state:{ movieDetails: { movie } }});
+    }
+
+    function findTV(tvshow) {
+        navigate(`/secondary-tv-page/${tvshow['id']}`, { state: { tvDetails: { tvshow } } });
+      }
     
     function secondfindbook(author) {
         if(!loadingb)
@@ -68,16 +94,73 @@ const SearchBox = (timeFrame, count) => {
     }
 
 
-    const renderSliderList = (res) => {
-        if (!loading) {
+    const renderSliderList = (res, resm, rest) => {
+        if (!loading && !loadingm) {
+            var result = [];
             var text = "";
             res = res.docs;
+            //resm = resm.results;
+            if(resm !== undefined)
+            {
+                let length = resm.length;
+                if(length > 5)
+                    length = 5;
+                console.log(resm.length);
+               // for (let i = 0; i < length; i++)
+                {
+                  //  console.log(i);
+                    result.push (
+                        <div>
+                            {
+                                (resm.map(movie => (
+                                    <Dropdown.Item onClick={() => findMovie(movie)}>
+                                        <p >{movie.original_title} (Movie)</p>
+                                        <Dropdown.Divider />
+                                    </Dropdown.Item>
+
+                                )))
+                            }
+                        </div>
+                    )                   
+
+                }
+                
+            }
+            if(rest !== undefined)
+            {
+                let length = resm.length;
+                if(length > 5)
+                    length = 5;
+                console.log(rest.length);
+               // for (let i = 0; i < length; i++)
+                {
+                  //  console.log(i);
+                    result.push (
+                        <div>
+                            {
+                                (rest.map(tvshow => (
+                                    <Dropdown.Item onClick={() => findTV(tvshow)}>
+                                        <p >{tvshow.name} (TV Show)</p>
+                                        <Dropdown.Divider />
+                                    </Dropdown.Item>
+
+                                )))
+                            }
+                        </div>
+                    )                   
+
+                }
+                
+            }
             if(res !== undefined)
             {
-                for (let i = 0; i < res.length; i++) {
-                    pub = res[i].publisher[0];
+                let length = res.length;
+                if(length > 5)
+                    length = 5;
+                for (let i = 0; i < length; i++) {
                     // will need to change probably but good for now
                     try {
+                        pub = res[i].publisher[0];
                         isbn_10_input = res[i].isbn[0];
                         isbn_13_input = res[i].isbn[1];
                         amazon = res[i].id_amazon[0];
@@ -86,20 +169,21 @@ const SearchBox = (timeFrame, count) => {
                     {
 
                     }
-                    return (
-                        <div>
-                            {
-                                (res.map(book => (
-                                    <Dropdown.Item onClick={() => findBook(book.key, book.author_name)}>
-                                        <p >{book.title} by {book.author_name} (Book)</p>
-                                        <Dropdown.Divider />
-                                    </Dropdown.Item>
-                                    
-                                )))
-                            }
-                        </div>
-                    )
                 }
+                result.push (
+                    <div>
+                        {
+                            (res.map(book => (
+                                <Dropdown.Item onClick={() => findBook(book.key, book.author_name)}>
+                                    <p >{book.title} by {book.author_name} (Book)</p>
+                                    <Dropdown.Divider />
+                                </Dropdown.Item>
+                                
+                            )))
+                        }
+                    </div>
+                )
+                return result;
             }
 
         }
@@ -115,12 +199,12 @@ const SearchBox = (timeFrame, count) => {
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <button type="button" class="btn btn-primary" >Search</button>
+                        <button type="button" class="btn btn-primary" onClick={() => navigate('/search-page', { state : {searchEntry} } )}>Search</button>
                     </div>
                     <div>
                         <Dropdown.Menu show = {showDrop? true : false}>
-                            {renderSliderList(response)}
-                            <Dropdown.Item onClick={() => navigate('/search-page', { state : {searchEntry}} )} className="dropdownlink" >
+                            {renderSliderList(response, responsem, responset)}
+                            <Dropdown.Item onClick={() => navigate('/search-page', { state : {searchEntry} } )} className="dropdownlink" >
                                 View More Results
                             </Dropdown.Item>
                         </Dropdown.Menu>
