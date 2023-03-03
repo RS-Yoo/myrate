@@ -115,12 +115,12 @@ const SearchBox = (timeFrame, count) => {
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <button type="button" class="btn btn-primary" >Search</button>
+                        <button type="button" class="btn btn-primary" onClick={() => navigate('/search-page', { state : {searchEntry} } )}>Search</button>
                     </div>
                     <div>
                         <Dropdown.Menu show = {showDrop? true : false}>
                             {renderSliderList(response)}
-                            <Dropdown.Item onClick={() => navigate('/search-page', { state : {searchEntry}} )} className="dropdownlink" >
+                            <Dropdown.Item onClick={() => navigate('/search-page', { state : {searchEntry} } )} className="dropdownlink" >
                                 View More Results
                             </Dropdown.Item>
                         </Dropdown.Menu>
