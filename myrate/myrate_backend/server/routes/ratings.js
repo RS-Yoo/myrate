@@ -77,6 +77,24 @@ ratingRoutes.route("/rating/findrating/:username").get(function (req, res) {
       })
 })
 
+ratingRoutes.route("/rating/findstatrating").get(function (req, res) {
+  let db_connect = dbo.getDb();
+  let username = req.query.username;
+  db_connect
+      .collection("ratings")
+      .aggregate([
+        {
+          $match: {
+            user_username: username
+          }
+        }
+      ])
+      .toArray(function(err, result) {
+        if(err) throw err;
+        res.json(result);
+      })
+})
+
  
 // This section will help you create a new rating.
 ratingRoutes.route("/rating/add").post(function (req, response) {
