@@ -37,6 +37,14 @@ const SearchBox = (timeFrame, count) => {
         responseLength: 5,
     });
 
+    const { responset, loadingt, errort } = useAxiosTMDBSearch({
+        method: 'get',
+        url: `search/tv`,
+        query: searchEntry,
+        sortByPopularity: true,
+        responseLength: 5,
+      });
+
 
     const { response, loading, error } = useAxiosGoogleBooks({
         method: 'get',
@@ -62,6 +70,10 @@ const SearchBox = (timeFrame, count) => {
     {
         navigate(`/secondary-movie-page/${movie['id']}`, {state:{ movieDetails: { movie } }});
     }
+
+    function findTV(tvshow) {
+        navigate(`/secondary-tv-page/${tvshow['id']}`, { state: { tvDetails: { tvshow } } });
+      }
     
     function secondfindbook(author) {
         if(!loadingb)
@@ -82,15 +94,11 @@ const SearchBox = (timeFrame, count) => {
     }
 
 
-    const renderSliderList = (res, resm) => {
+    const renderSliderList = (res, resm, rest) => {
         if (!loading && !loadingm) {
             var result = [];
             var text = "";
-            try {
-                res = res.docs;
-
-            }
-            catch {}
+            res = res.docs;
             //resm = resm.results;
             if(resm !== undefined)
             {
@@ -113,9 +121,33 @@ const SearchBox = (timeFrame, count) => {
                                 )))
                             }
                         </div>
-                    )
+                    )                   
 
-                    
+                }
+                
+            }
+            if(rest !== undefined)
+            {
+                let length = resm.length;
+                if(length > 5)
+                    length = 5;
+                console.log(rest.length);
+               // for (let i = 0; i < length; i++)
+                {
+                  //  console.log(i);
+                    result.push (
+                        <div>
+                            {
+                                (rest.map(tvshow => (
+                                    <Dropdown.Item onClick={() => findTV(tvshow)}>
+                                        <p >{tvshow.name} (TV Show)</p>
+                                        <Dropdown.Divider />
+                                    </Dropdown.Item>
+
+                                )))
+                            }
+                        </div>
+                    )                   
 
                 }
                 
@@ -171,7 +203,7 @@ const SearchBox = (timeFrame, count) => {
                     </div>
                     <div>
                         <Dropdown.Menu show = {showDrop? true : false}>
-                            {renderSliderList(response, responsem)}
+                            {renderSliderList(response, responsem, responset)}
                             <Dropdown.Item onClick={() => navigate('/search-page', { state : {searchEntry} } )} className="dropdownlink" >
                                 View More Results
                             </Dropdown.Item>

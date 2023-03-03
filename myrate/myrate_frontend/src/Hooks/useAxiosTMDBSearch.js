@@ -16,17 +16,26 @@ axios.defaults.baseURL = 'https://api.themoviedb.org/3/'
 
 const useAxiosTMDBSearch = ({ url, method, query, body = null, headers = null, sortByPopularity = false, responseLength }) => {
     const [responsem, setResponse] = useState(null);
+    const [responset, setResponseT] = useState(null);
     const [errorm, setError] = useState('');
     const [loadingm, setloading] = useState(true);
 
     const fetchData = () => {
         axios[method](`https://api.themoviedb.org/3/${url}?${TMDB_API_KEY}&query=${query}`, JSON.parse(headers), JSON.parse(body))
             .then((res) => {
-                console.log("response length: " + responseLength);
                 if (sortByPopularity)
-                    setResponse(sortResponseByPopularity(res.data['results'], false).splice(0, responseLength));
+                {
+                    let r = sortResponseByPopularity(res.data['results'], false).splice(0, responseLength);
+                    setResponse(r);
+                    setResponseT(r);
+
+                }
                 else
+                {
                     setResponse(res.data['results'].splice(0, responseLength));
+                    setResponseT(res.data['results'].splice(0, responseLength));
+
+                }
             
             })
             .catch((err) => {
@@ -51,7 +60,7 @@ const useAxiosTMDBSearch = ({ url, method, query, body = null, headers = null, s
         fetchData();
     }, [method, url, body, query, headers]);
 
-    return { responsem, errorm, loadingm };
+    return { responsem, responset, errorm, loadingm };
 };
 
 export default useAxiosTMDBSearch;
