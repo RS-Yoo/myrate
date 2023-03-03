@@ -86,7 +86,11 @@ const SearchBox = (timeFrame, count) => {
         if (!loading && !loadingm) {
             var result = [];
             var text = "";
-            res = res.docs;
+            try {
+                res = res.docs;
+
+            }
+            catch {}
             //resm = resm.results;
             if(resm !== undefined)
             {

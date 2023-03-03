@@ -3,12 +3,15 @@ import Navbar from "../Components/Navbar";
 import { useLocation } from 'react-router-dom'
 import useAxiosLibraryBooks from "../Hooks/useAxiosLibraryBooks";
 import useAxiosGoogleBooks from "../Hooks/useAxiosGoogleBooks";
+import useAxiosTMDBSearch from "../Hooks/useAxiosTMDBSearch";
 import "./SearchPage.css";
+import SearchBox from "../Components/SearchBox";
 
 const SearchPage = () => {
 
   const [searchKey, setSearchKey] = useState("");
   const [pageNum, setPageNum] = useState(0);
+  const [mediaType, setMedia] = useState("books");
 
   const [bookDetails, setBookDetails] = useState("");
   const [calls, setCalls] = useState("");
@@ -16,6 +19,18 @@ const SearchPage = () => {
   const location = useLocation();
   const { searchEntry } = location.state;
   console.log("search entry: " + JSON.stringify(searchEntry));
+
+    // Base URL that needs to be pre-pended to 'poster_path'
+    const prePosterPath = "https://image.tmdb.org/t/p/original";
+
+  const { responsem, loadingm, errorm } = useAxiosTMDBSearch({
+    method: 'get',
+    url: `search/movie`,
+    query: searchEntry,
+    sortByPopularity: true,
+    responseLength: 1000,
+});
+
 
   const { response, loading, error } = useAxiosGoogleBooks({
     method: 'get',
@@ -66,59 +81,111 @@ const setBookCard = (key, author, title) => {
 
   // gets title/author for every book
   const renderSearchList = (res) => {
-    let loadBooks = []
-    if (!loading && res) {
-      res.docs.map( function(book) {
-        // basically we only want to get books that display the cover
-        if(typeof book === "object")
-        {
-          if( typeof book.cover_i === "number")
+    if(mediaType === "books")
+    {
+      let loadBooks = []
+      if (!loading && res) {
+        res.docs.map( function(book) {
+          // basically we only want to get books that display the cover
+          if(typeof book === "object")
           {
-            console.log("book type: " + typeof book);
-            console.log("cover_i: " + typeof book.cover_i);
-            console.log("book in add books: " + book.cover_i)
-            loadBooks.push(
-              
-              <div class="flip-card" style={{ display: 'inline-block' }}>
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img src={"https://covers.openlibrary.org/b/ID/" + book.cover_i + "-M.jpg"} alt="Cover Image" style={{ width: 180, height: 272 }}></img>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>{book.title}</h3>
-                    <p>{book.author_name}</p>
+            if( typeof book.cover_i === "number")
+            {
+              console.log("book type: " + typeof book);
+              console.log("cover_i: " + typeof book.cover_i);
+              console.log("book in add books: " + book.cover_i)
+              loadBooks.push(
+                
+                <div class="flip-card" style={{ display: 'inline-block' }}>
+                  <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                      <img src={"https://covers.openlibrary.org/b/ID/" + book.cover_i + "-M.jpg"} alt="Cover Image" style={{ width: 180, height: 272 }}></img>
+                    </div>
+                    <div class="flip-card-back">
+                      <h3>{book.title}</h3>
+                      <p>{book.author_name}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
+              );
+            }
           }
-        }
-
-    });
-    if(!loading && res)
-    {
-      return (
-        <div >
-          {
-            <><table>
-              <tr>
-                <th>Results</th>
-              </tr>
-              {DisplayTable(loadBooks, 4, 12)}
-              <tr >
-              </tr>
-            </table>
-              <nav aria-label="...">
-                <ul class="pagination">
-                  {DisplayFooter(loadBooks.length, 4, 12)}
-                </ul>
-              </nav>
-              </>
-          }
-        </div>
-      )
-
+  
+      });
+      if(!loading && res)
+      {
+        return (
+          <div >
+            {
+              <><table>
+                <tr>
+                  <th>Results</th>
+                </tr>
+                {DisplayTable(loadBooks, 4, 12)}
+                <tr >
+                </tr>
+              </table>
+                <nav aria-label="...">
+                  <ul class="pagination">
+                    {DisplayFooter(loadBooks.length, 4, 12)}
+                  </ul>
+                </nav>
+                </>
+            }
+          </div>
+        )
+  
+      }
+      }
     }
+    else if(mediaType === "movies")
+    {
+      let loadMovies = []
+      if (!loadingm && responsem) {
+        responsem.map( function(movie) {
+
+              loadMovies.push(
+                
+                <div class="flip-card" style={{ display: 'inline-block' }}>
+                  <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                      <img src={`${prePosterPath}${movie['poster_path']}`} alt="Cover Image" style={{ width: 180, height: 272 }}></img>
+                    </div>
+                    <div class="flip-card-back">
+                      <h3>{movie.original_title}</h3>
+                    </div>
+                  </div>
+                </div>
+              );
+        });
+            
+          
+      if(!loadingm && responsem)
+      {
+        return (
+          <div >
+            {
+              <><table>
+                <tr>
+                  <th>Results</th>
+                </tr>
+                {DisplayTable(loadMovies, 4, 12)}
+                <tr >
+                </tr>
+              </table>
+                <nav aria-label="...">
+                  <ul class="pagination">
+                    {DisplayFooter(loadMovies.length, 4, 12)}
+                  </ul>
+                </nav>
+                </>
+            }
+          </div>
+        )
+  
+      }
+      }
+
     }
   };
 
@@ -221,6 +288,10 @@ const setBookCard = (key, author, title) => {
       <Navbar />
       <div>
         <h5 class="SearchTitle"> Search Page</h5>
+        <button onClick={() => setMedia("books")}> Books </button>
+        <button onClick={() => setMedia("movies")}> Movies </button>
+        <button> TV Shows </button>
+
         {renderSearchList(response)}
       </div>
     </>
