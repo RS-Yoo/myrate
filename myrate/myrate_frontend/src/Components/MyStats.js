@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { ProSidebarProvider } from 'react-pro-sidebar';
+import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import { ResponsiveBar } from '@nivo/bar';
 import { ResponsivePie } from '@nivo/pie';
 
@@ -130,7 +132,34 @@ const MyStats = () => {
     };
 
     return (
-        <><dl>
+        <>
+        <div style={{ display: 'flex', height: '100%' }}>
+          <ProSidebarProvider rtl={true}>
+          <Sidebar>
+            <Menu>
+              <SubMenu label="Yearly Goals">
+                <MenuItem>Goal 1</MenuItem>
+                <MenuItem>Goal 2</MenuItem>
+                <MenuItem>Goal 3</MenuItem>
+              </SubMenu>
+              <SubMenu label="Monthly Goals">
+                <MenuItem>Goal 1</MenuItem>
+                <MenuItem>Goal 2</MenuItem>
+                <MenuItem>Goal 3</MenuItem>
+              </SubMenu>
+              <SubMenu label="Daily Goals">
+                <MenuItem>Goal 1</MenuItem>
+                <MenuItem>Goal 2</MenuItem>
+                <MenuItem>Goal 3</MenuItem>
+              </SubMenu>
+            </Menu>
+          </Sidebar>
+          </ProSidebarProvider>;
+          <main>
+          </main>
+        </div>
+        <div>
+        <dl>
             <dt><strong>Books</strong></dt>
                 <dd><li><i>Amount of Books Read: {BookStat}</i></li></dd>
                 <dd><li><i>Time Spent Reading: {BookStat * 600} mins!</i></li></dd>
@@ -141,10 +170,11 @@ const MyStats = () => {
                 <dd><li><i>Amount of TV Shows Watched: {TVStat}</i></li></dd>
                 <dd><li><i>Time Spent Watching TV Shows: {TVStat * 16 * 40} mins!</i></li></dd>
         </dl>
-        <div style={{height: 600}}>
+        </div>
+        <div style={{height: 400}}>
           {Bar()}
         </div>
-        <div style={{height: 600}}>
+        <div style={{height: 400}}>
           {Pie()}
         </div></>
     )
