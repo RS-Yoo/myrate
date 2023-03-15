@@ -11,6 +11,8 @@ import GoalSideBar from './GoalSidebar';
 import { ProSidebarProvider } from 'react-pro-sidebar';
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import GoalPopUp from './GoalPopUp';
+import ProgressBar from 'react-bootstrap/ProgressBar';
+import Tooltip from "@material-ui/core/Tooltip";
 
 const MyStats = () => {
   let [BookStat, setBookStat] = useState(0);
@@ -69,15 +71,12 @@ const MyStats = () => {
       },
     })
       .then(function (response) {
-        console.log("in response " + JSON.stringify(response.data));
         response.data.map(d => {
           if (d["daymonthyear"] === "Yearly") {
-            console.log("pushing: " + JSON.stringify(d));
             yearlyGoals.push(d);
           } else if (d["daymonthyear"] === "Monthly") {
             monthlyGoals.push(d);
           } else {
-            console.log("pushing: " + JSON.stringify(d));
             dailyGoals.push(d);
           }
         });
@@ -175,12 +174,44 @@ const MyStats = () => {
   function returnGoals(goals) {
     console.log(JSON.stringify(goals));
     try {
+      let goalSats = [];
+      goals.map(function (g) {
+        let varColor = "success";
+        let nowNum = 0;
+        let ttstr = "";
+        if (g.measurement === "MCount") {
+          if (g.mediaType === "Books")
+          {
+            nowNum = BookStat / g.amount;
+            ttstr = "Read " + BookStat + " books out of " + g.amount;
+          }
+          else if (g.mediaType === "Movies")
+          {
+            nowNum = MovieStat / g.amount;
+            ttstr = "Watched " + BookStat + " movies out of " + g.amount;
+          }
+          else
+          {
+            nowNum = TVStat / g.amount;
+            ttstr = "Watched " + BookStat + " shows out of " + g.amount;
+          }
+          nowNum *= 100;
+          if (nowNum < 33)
+            varColor = "danger"
+          else if (nowNum < 66)
+            varColor = "warning"
+          goalSats.push(<>
+            <p style={{backgroundColor: "lightcyan"}}>{g.goalTitle} ( {g.mediaType} )</p>
+            <Tooltip title={ttstr}>
+              <ProgressBar striped animated variant={varColor} now={nowNum} />
+            </Tooltip>
+          </>);
+        }
+      });
 
       return (
         <div>
-          {goals.map(goal => (
-            <p>{goal.goalTitle} ( {goal.mediaType} )</p>
-          ))}
+          {goalSats}
         </div>
       )
     }
