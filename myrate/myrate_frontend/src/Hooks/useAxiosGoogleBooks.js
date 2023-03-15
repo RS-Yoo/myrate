@@ -22,8 +22,6 @@ const useAxiosGoogleBooks = ({ searchterms, specify_type, method, body = null, h
         axios[method]('https://openlibrary.org/search.json?'+`${specify_type}`+ '='+`${searchterms}`+'&limit='+`${responseLength}`, JSON.parse(headers), JSON.parse(body))//'https://www.googleapis.com/books/v1/volumes?q='+`${searchterms}:keyes&${GOOGLE_API_KEY}`, JSON.parse(headers), JSON.parse(body))
         .then((res) => {
             console.log('https://openlibrary.org/search.json?'+`${specify_type}`+ '='+`${searchterms}`+'&limit='+`${responseLength}`);
-            //console.log("--------------------------");
-            //console.log(JSON.stringify(res.data));
             setResponse(res.data);
         })
         .catch((err) => {

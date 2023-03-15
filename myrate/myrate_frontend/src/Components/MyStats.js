@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { ProSidebarProvider } from 'react-pro-sidebar';
-import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
+
+// Chart imports
 import { ResponsiveBar } from '@nivo/bar';
 import { ResponsivePie } from '@nivo/pie';
+import GoalSideBar from './GoalSidebar';
 
 const MyStats = () => {
     let [BookStat, setBookStat] = useState(0);
@@ -72,7 +73,7 @@ const MyStats = () => {
           margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
           padding={0.4}
           valueScale={{ type: "linear" }}
-          colors="#3182CE"
+          colors={{scheme: 'nivo'}}
           animate={true}
           enableLabel={false}
           axisTop={null}
@@ -132,49 +133,27 @@ const MyStats = () => {
     };
 
     return (
-        <>
-        <div style={{ display: 'flex', height: '100%' }}>
-          <ProSidebarProvider rtl={true}>
-          <Sidebar>
-            <Menu>
-              <SubMenu label="Yearly Goals">
-                <MenuItem>Goal 1</MenuItem>
-                <MenuItem>Goal 2</MenuItem>
-                <MenuItem>Goal 3</MenuItem>
-              </SubMenu>
-              <SubMenu label="Monthly Goals">
-                <MenuItem>Goal 1</MenuItem>
-                <MenuItem>Goal 2</MenuItem>
-                <MenuItem>Goal 3</MenuItem>
-              </SubMenu>
-              <SubMenu label="Daily Goals">
-                <MenuItem>Goal 1</MenuItem>
-                <MenuItem>Goal 2</MenuItem>
-                <MenuItem>Goal 3</MenuItem>
-              </SubMenu>
-            </Menu>
-          </Sidebar>
-          </ProSidebarProvider>;
-          <main>
-          </main>
+      <>
+        <div style={{  }}>
         </div>
-        <div>
-        <dl>
+        <div style={{display: 'flex', width: '100%', height:'100%'}}>
+          <dl style = {{width: '80%'}}>
             <dt><strong>Books</strong></dt>
-                <dd><li><i>Amount of Books Read: {BookStat}</i></li></dd>
-                <dd><li><i>Time Spent Reading: {BookStat * 600} mins!</i></li></dd>
+            <dd><li><i>Amount of Books Read: {BookStat}</i></li></dd>
+            <dd><li><i>Time Spent Reading: {BookStat * 600} mins!</i></li></dd>
             <dt><strong>Movies</strong></dt>
-                <dd><li><i>Amount of Movies Watched: {MovieStat}</i></li></dd>
-                <dd><li><i>Time Spent Watching Movies: {MovieStat * 110} mins!</i></li></dd>
+            <dd><li><i>Amount of Movies Watched: {MovieStat}</i></li></dd>
+            <dd><li><i>Time Spent Watching Movies: {MovieStat * 110} mins!</i></li></dd>
             <dt><strong>TV Shows</strong></dt>
-                <dd><li><i>Amount of TV Shows Watched: {TVStat}</i></li></dd>
-                <dd><li><i>Time Spent Watching TV Shows: {TVStat * 16 * 40} mins!</i></li></dd>
-        </dl>
+            <dd><li><i>Amount of TV Shows Watched: {TVStat}</i></li></dd>
+            <dd><li><i>Time Spent Watching TV Shows: {TVStat * 16 * 40} mins!</i></li></dd>
+          </dl>
+          <GoalSideBar style = {{display: "flex", rtl: 'true', flexDirection: "row-reverse",  height: '100%'}}/>
         </div>
-        <div style={{height: 400}}>
+        <div style={{ height: 400, width: '70%', display: 'inline-flex' }}>
           {Bar()}
         </div>
-        <div style={{height: 400}}>
+        <div style={{ height: 400, width: '30%', display: 'inline-flex'}}>
           {Pie()}
         </div></>
     )

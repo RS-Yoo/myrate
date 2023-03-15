@@ -21,7 +21,7 @@ const useAxiosLibraryBooks = ({ key, method, body = null, headers = null, }) => 
     const fetchData = async () => {
         axios[method]('https://openlibrary.org'+`${key}`+'.json', JSON.parse(headers), JSON.parse(body))//'https://www.googleapis.com/books/v1/volumes?q='+`${searchterms}:keyes&${GOOGLE_API_KEY}`, JSON.parse(headers), JSON.parse(body))
         .then((res) => {
-            console.log('https://openlibrary.org'+`${key}`+'.json');
+            //console.log('https://openlibrary.org'+`${key}`+'.json');
             //console.log("--------------------------");
             //console.log(JSON.stringify(res.data));
             setResponseb(res.data);
