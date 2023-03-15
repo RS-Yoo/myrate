@@ -4,7 +4,7 @@ import 'reactjs-popup/dist/index.css';
 import NewGoalForm from './NewGoalForm'
 
 export default () => (
-  <Popup trigger={<button> Add New Goal</button>} position="left center">
+  <Popup trigger={<button> Add New Goal</button>} position="left center" >
     <div>
         <NewGoalForm/>
     </div>
