@@ -59,7 +59,7 @@ const SearchBox = (timeFrame, count) => {
     });
 
 
-    async function findBook (inputKey, author, pub) {
+    async function findBook (inputKey, author) {
         setSearchKey(inputKey);
         console.log("beresponse: " + responseb);
         secondfindbook(author, pub);     

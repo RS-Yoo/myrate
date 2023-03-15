@@ -53,7 +53,33 @@ const SearchPage = () => {
     key: searchKey,
   });
 
+  async function findBook (inputKey, author, cover) {
+    setSearchKey(inputKey);
+    console.log("beresponse: " + responseb);
+    secondfindbook(author, cover);     
+
+}
+function secondfindbook(author, cover) {
+  if(!loadingb)
+  {
+    console.log("HERRRREEE");
+      var image = "https://covers.openlibrary.org/b/ID/" + cover + "-M.jpg";
+      var bookTitle = responseb.title;
+      var bookAuthor = author;
+      var publisher = response.publisher;
+      var description = responseb.description.value;
+      var amazonlink = "amazon.com/db/";// + book.amazon;
+
+      const bookDetails = {book : {image: image, bookTitle: bookTitle, bookAuthor: bookAuthor, publisher: publisher, isbn_10: responseb.isbn_10, isbn_13: responseb.isbn_13, description: description, purchaseLinks: [{name: "Amazon" }, {link: amazonlink}]}}
+      
+      console.log("details: " + JSON.stringify(bookDetails));
+      
+      navigate('/secondary-book-page', { state : {bookDetails}} );
+  }
+}
+
   function findMovie(movie) {
+    console.log("Movie details: " + JSON.stringify(movie));
     navigate(`/secondary-movie-page/${movie['id']}`, { state: { movieDetails: { movie } } });
   }
 
@@ -65,15 +91,12 @@ const SearchPage = () => {
   // gets title/author for every book
   const renderSearchList = (res) => {
     if (mediaType === "books") {
-      let loadBooks = []
+      let loadBooks = [];
       if (!loading && res) {
         res.docs.map(function (book) {
           // basically we only want to get books that display the cover
           if (typeof book === "object") {
             if (typeof book.cover_i === "number") {
-              console.log("book type: " + typeof book);
-              console.log("cover_i: " + typeof book.cover_i);
-              console.log("book in add books: " + book.cover_i)
               loadBooks.push(
                 <div class="flip-card" style={{ display: 'inline-block' }}>
                   <div class="flip-card-inner">
@@ -81,8 +104,9 @@ const SearchPage = () => {
                       <img src={"https://covers.openlibrary.org/b/ID/" + book.cover_i + "-M.jpg"} alt="Cover Image" style={{ width: 180, height: 272 }}></img>
                     </div>
                     <div class="flip-card-back">
-                      <h3>{book.title}</h3>
+                      <h6>{book.title}</h6>
                       <p>{book.author_name}</p>
+                      <button onClick={() => findBook(book.key, book.author_name, "https://covers.openlibrary.org/b/ID/" + book.cover_i + "-M.jpg")}>View Book</button>
                     </div>
                   </div>
                 </div>
@@ -99,13 +123,13 @@ const SearchPage = () => {
                   <tr>
                     <th>Results</th>
                   </tr>
-                  {DisplayTable(loadBooks, 4, 12)}
+                  {DisplayTable(loadBooks, 8, 32)}
                   <tr >
                   </tr>
                 </table>
                   <nav aria-label="...">
                     <ul class="pagination">
-                      {DisplayFooter(loadBooks.length, 4, 12)}
+                      {DisplayFooter(loadBooks.length, 8, 32)}
                     </ul>
                   </nav>
                 </>
@@ -120,9 +144,7 @@ const SearchPage = () => {
       let loadMovies = []
       if (!loadingm && responsem) {
         responsem.map(function (movie) {
-
           loadMovies.push(
-
             <div class="flip-card" style={{ display: 'inline-block' }} >
               <div class="flip-card-inner">
                 <div class="flip-card-front">
@@ -142,7 +164,7 @@ const SearchPage = () => {
               {
                 <><table>
                   <tr>
-                    <th>Results</th>
+                    <th colSpan={8}>Results</th>
                   </tr>
                   {DisplayTable(loadMovies, 4, 12)}
                   <tr >
@@ -227,6 +249,7 @@ const SearchPage = () => {
       maxlength = mediaCount;
     for (let i = currLoc; i < maxlength; i += rowNum) {
       let j = i;
+      console.log(mediaList[i]);
       result.push(
         <tr>
           {
@@ -235,6 +258,10 @@ const SearchPage = () => {
               <td> {mediaList[j + 1]} </td>
               <td> {mediaList[j + 2]} </td>
               <td> {mediaList[j + 3]} </td>
+              <td> {mediaList[j + 4]} </td>
+              <td> {mediaList[j + 5]} </td>
+              <td> {mediaList[j + 6]} </td>
+              <td> {mediaList[j + 7]} </td>
             </>
           }
         </tr>
