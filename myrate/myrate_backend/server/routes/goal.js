@@ -53,6 +53,44 @@ goalRoutes.route("/goal/findgoal").get(function (req, res) {
   });
  });
 
+ goalRoutes.route("/goal/findgoal/:username").get(function (req, res) {
+    let db_connect = dbo.getDb();
+    let mid = req.query.media_id;
+    const query = {media_id: ObjectId(mid)};
+    let username = req.params.username;
+    db_connect
+        .collection("goals")
+        .aggregate([
+          {
+            $match: {
+              user_username: username
+            }
+          }
+        ])
+        .toArray(function(err, result) {
+          if(err) throw err;
+          res.json(result);
+        })
+  })
+
+ goalRoutes.route("/goal/findstatgoal").get(function (req, res) {
+    let db_connect = dbo.getDb();
+    let username = req.query.username;
+    db_connect
+        .collection("goals")
+        .aggregate([
+          {
+            $match: {
+              username: username
+            }
+          }
+        ])
+        .toArray(function(err, result) {
+          if(err) throw err;
+          res.json(result);
+        })
+  })
+
  
 // This section will help you create a new goal.
 goalRoutes.route("/goal/add").post(function (req, response) {
