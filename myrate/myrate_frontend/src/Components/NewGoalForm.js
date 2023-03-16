@@ -20,7 +20,7 @@ function HorizontalExample() {
     const [time_Goal, setTimeGoal] = useState(''); // yearly, monthly, or daily
     const [t_postitive, setPositive] = useState(''); // true or false
     const [a_amount, setAmount] = useState('');
-    const [m_measurement, setMeasurement] = useState(''); // minutes, hours, count, etc.
+    const [m_measurement, setMeasurement] = useState('MCount'); // minutes, hours, count, etc.
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -114,17 +114,6 @@ function HorizontalExample() {
             <Col sm={10}>
                 <Form.Control type="textarea" rows={1} placeholder="Amount" />
             </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} className="mb-3" controlId="formHorizontalPassword" value={m_measurement} onChange={e => setMeasurement(e.target.value)}>
-                <Col sm={10}>
-                    <Form.Select aria-label="Default select example">
-                        <option>Measurement</option>
-                        <option value="MCount">Media Count</option>
-                        <option value="Minutes">Minutes</option>
-                        <option value="Hours">Hours</option>
-                    </Form.Select>
-                </Col>
             </Form.Group>
 
             <Form.Group as={Row} className="mb-3">

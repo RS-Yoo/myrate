@@ -135,14 +135,15 @@ const SecondaryBook = () => {
                 },
             }).then((response) => {
                 const currReview = ((response.data[0]));
-
+                let day = new Date();
                 // create review
                 const reviewData = {
                     stars: rate,
                     review: review,
                     media_type: "books",
                     media_id: mediaId,
-                    user: userProfile.username
+                    user: userProfile.username,
+                    timestamp_day: day,
                 }
                 if(!currReview) {
                     // adds rating to database

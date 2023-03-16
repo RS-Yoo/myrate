@@ -89,6 +89,7 @@ const SecondaryTV = () => {
             console.log(response.data);
         // set current rating and review to the first value of this list
         // In the future, set it to current user's rating and review
+        console.log("Rate here?");
         setRate(ratingsList[0]?.stars);
         setReview(ratingsList[0]?.review);
         setReviewId(ratingsList[0]?._id);

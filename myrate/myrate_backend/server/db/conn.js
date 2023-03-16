@@ -115,7 +115,8 @@ async function SeedReviews(media, type) {
         media_type: type,
         media_id: media._id,
         user_id: rUser[0]._id,
-        user_username: rUser[0].username
+        user_username: rUser[0].username,
+        timestamp_day: faker.date.past()
       };
   
       ratingData.push(newRating);
