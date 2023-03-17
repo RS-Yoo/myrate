@@ -12,6 +12,9 @@ import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import GoalPopUp from './GoalPopUp';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import Tooltip from "@material-ui/core/Tooltip";
+import NewGoalForm from './NewGoalForm';
+import Popup from 'reactjs-popup';
+
 
 const MyStats = () => {
   let [BookStat, setBookStat] = useState(0);
@@ -49,12 +52,6 @@ const MyStats = () => {
     prevMonth.setDate(0);
     prevMonth.setDate(day);
     return prevMonth;
-  }
-
-  function getPrevYear() {
-    let now = new Date();
-    let newMil = now.getMilliseconds() - 31556952000; // subtract amount of milliseconds in a week from curr milliseconds
-    return new Date(newMil);
   }
 
   // Fetch Ratings data of this user from the backend
@@ -250,6 +247,24 @@ const MyStats = () => {
     );
   };
 
+  function editGoal(goal) {
+    // set GoalName, MediaType, TimeGoal, Positive, Amount of state
+    console.log("In edit rating");  
+    return (
+      <Popup position="left center" >
+        <div>
+          <NewGoalForm state={{ goalDetails: { goal } }} />
+        </div>
+      </Popup>
+    );
+  }
+  function deleteGoal(id) {
+    axios.delete(`http://localhost:5000/goal/delete/${id}`)
+    .then(function(response) {
+        window.location.reload(false);
+    })    
+  }
+
   function returnDailyGoals(goals) {
     console.log(JSON.stringify(goals));
     try {
@@ -284,7 +299,17 @@ const MyStats = () => {
             <Tooltip title={ttstr}>
               <ProgressBar striped animated variant={varColor} now={nowNum} />
             </Tooltip>
-          </>);
+            <div style={{ display: "flex", flexDirection: "row-reverse", height: '100%' }}>
+              <p style={{color: 'blue', cursor: "pointer"}} onClick={() => deleteGoal(g._id)}>Delete &nbsp;</p> 
+              <p>&nbsp;|&nbsp;</p>
+              <Popup trigger={<p style={{color: 'blue', cursor: "pointer"} }> Edit </p>} position="left center" >
+                <div>
+                  <NewGoalForm state={{ goalDetails: { g } }}/>
+                </div>
+              </Popup>
+            </div>
+          </>
+          );
         }
       });
 
@@ -333,6 +358,15 @@ const MyStats = () => {
             <Tooltip title={ttstr}>
               <ProgressBar striped animated variant={varColor} now={nowNum} />
             </Tooltip>
+            <div style={{ display: "flex", flexDirection: "row-reverse", height: '100%' }}>
+              <p style={{color: 'blue', cursor: "pointer"}} onClick={() => deleteGoal(g._id)}>Delete &nbsp;</p> 
+              <p>&nbsp;|&nbsp;</p>
+              <Popup trigger={<p style={{color: 'blue', cursor: "pointer"} }> Edit </p>} position="left center" >
+                <div>
+                  <NewGoalForm state={{ goalDetails: { g } }}/>
+                </div>
+              </Popup>
+            </div>
           </>);
         }
       });
@@ -382,6 +416,15 @@ const MyStats = () => {
             <Tooltip title={ttstr}>
               <ProgressBar striped animated variant={varColor} now={nowNum} />
             </Tooltip>
+            <div style={{ display: "flex", flexDirection: "row-reverse", height: '100%' }}>
+              <p style={{color: 'blue', cursor: "pointer"}} onClick={() => deleteGoal(g._id)}>Delete &nbsp;</p> 
+              <p>&nbsp;|&nbsp;</p>
+              <Popup trigger={<p style={{color: 'blue', cursor: "pointer"} }> Edit </p>} position="left center" >
+                <div>
+                  <NewGoalForm state={{ goalDetails: { g } }}/>
+                </div>
+              </Popup>
+            </div>
           </>);
         }
       });

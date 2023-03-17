@@ -9,6 +9,7 @@ import CloseButton from 'react-bootstrap/CloseButton';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Tooltip from "@material-ui/core/Tooltip";
+import { useLocation } from 'react-router-dom';
 import Popup from 'reactjs-popup';
 
 function HorizontalExample() {
@@ -21,6 +22,23 @@ function HorizontalExample() {
     const [t_postitive, setPositive] = useState(''); // true or false
     const [a_amount, setAmount] = useState('');
     const [m_measurement, setMeasurement] = useState('MCount'); // minutes, hours, count, etc.
+
+    try {
+        const location = useLocation();
+        const { goalDetails } = location.state;
+        console.log(JSON.stringify(goalDetails));
+        const { _goalName, _mediaType, _timeGoal, _positive, _amount, _measurement } = goalDetails;
+        setGoalName(_goalName);
+        setMediaType(_mediaType);
+        setTimeGoal(_timeGoal);
+        setPositive(_positive);
+        setAmount(_amount);
+        setMeasurement(_measurement);
+    }
+    catch {
+        console.log(JSON.stringify("not here"));
+    }
+
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -50,7 +68,7 @@ function HorizontalExample() {
             body: JSON.stringify(data),
         })
             .then(res => {
-                console.log("response from add: " + res);
+                window.location.reload(false);
             })
             .catch(error => {
                 console.log(error);

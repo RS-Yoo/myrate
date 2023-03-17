@@ -109,6 +109,7 @@ goalRoutes.route("/goal/add").post(function (req, response) {
    response.json(res);
  });
 });
+
  
 // This section will help you update a goal by id.
 goalRoutes.route("/update/:id").post(function (req, response) {
@@ -135,12 +136,12 @@ goalRoutes.route("/update/:id").post(function (req, response) {
 });
  
 // This section will help you delete a goal
-goalRoutes.route("/:id").delete((req, response) => {
+goalRoutes.route("/goal/delete/:id").delete((req, response) => {
  let db_connect = dbo.getDb();
  let myquery = { _id: ObjectId(req.params.id) };
  db_connect.collection("goals").deleteOne(myquery, function (err, obj) {
    if (err) throw err;
-   console.log("1 document deleted");
+   console.log("1 document deleted with id: " + req.params.id);
    response.json(obj);
  });
 });
