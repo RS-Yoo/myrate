@@ -86,6 +86,7 @@ userRoutes.route("/user/add").post(function (req, response) {
    lastname: req.body.lastname,
    email: req.body.email,
    role: req.body.role,
+   timestamp_day: req.body.timestamp_day,
  };
  db_connect.collection("users").insertOne(myobj, function (err, res) {
    if (err) throw err;
@@ -105,6 +106,7 @@ userRoutes.route("/update/:id").post(function (req, response) {
     lastname: req.body.lastname,
     email: req.body.email,
     role: req.body.role,
+    timestamp_day: req.body.timestamp_day,
    },
  };
  db_connect

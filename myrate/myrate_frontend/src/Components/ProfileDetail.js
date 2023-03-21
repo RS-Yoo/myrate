@@ -22,7 +22,7 @@ export default function ProfileDetail() {
                 </div>
                 <div className="ms-3" style={{ marginTop: '130px' }}>
                   <MDBTypography tag="h5">{userProfile.username}</MDBTypography>
-                  <MDBCardText>Joined January 2023</MDBCardText>
+                  <MDBCardText>Joined on {userProfile.timestamp_day.toDateString()}</MDBCardText>
                 </div>
               </div>
               <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }}>

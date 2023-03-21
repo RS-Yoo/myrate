@@ -34,6 +34,8 @@ module.exports = {
       }
       
       const collection = client.db("media").collection("users");
+      // Command below updates all users to have a timestamp_day field (note: currently all set to the same) 
+      //collection.updateMany({}, {$set:{"timestamp_day": faker.date.past()}}); 
       
       if(collection.countDocuments() == 0)
       {
