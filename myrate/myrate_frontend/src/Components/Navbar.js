@@ -24,14 +24,19 @@ const Navbar = () => {
     const renderUserWidget = () => {
         if (userProfile.username) {
             return (
-                <button className="navbarLoginButton" onClick={handleLogout}>Logout {userProfile.username}</button>
+                <><Link class="nav-link" to="/profile">
+                    <button className="navbarLoginButton">Profile</button>
+                </Link>
+                <button className="navbarLoginButton" onClick={handleLogout}>Logout {userProfile.username}</button></>
             );
         }
         else {
             return (
+                <>
+
                 <Link class="nav-link" to="/login">
-                    <button className="navbarLoginButton">Log In</button>
-                </Link>
+                        <button className="navbarLoginButton">Log In</button>
+                    </Link></>
             );
         }
     };

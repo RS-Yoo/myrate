@@ -5,8 +5,10 @@ import collection1 from '../img/collection1.jpg'
 import collection2 from '../img/collection2.jpg'
 import collection3 from '../img/collection3.jpeg'
 import collection4 from '../img/collection4.jpg'
+import { useSelector } from 'react-redux';
 
 export default function ProfileDetail() {
+  const userProfile = useSelector((state) => { return state.userProfile; });
   return (
     <div>
       <MDBContainer className="py-5">
@@ -19,7 +21,7 @@ export default function ProfileDetail() {
                     alt="Generic placeholder image" className="mt-4 mb-2 img-thumbnail" fluid style={{ width: '150px', zIndex: '1' }} />
                 </div>
                 <div className="ms-3" style={{ marginTop: '130px' }}>
-                  <MDBTypography tag="h5">User One</MDBTypography>
+                  <MDBTypography tag="h5">{userProfile.username}</MDBTypography>
                   <MDBCardText>Joined January 2023</MDBCardText>
                 </div>
               </div>
