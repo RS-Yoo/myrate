@@ -6,9 +6,12 @@ import collection2 from '../img/collection2.jpg'
 import collection3 from '../img/collection3.jpeg'
 import collection4 from '../img/collection4.jpg'
 import { useSelector } from 'react-redux';
+import CollectionList from "../Components/CollectionList";
 
 export default function ProfileDetail() {
   const userProfile = useSelector((state) => { return state.userProfile; });
+
+
   return (
     <div>
       <MDBContainer className="py-5">
@@ -22,7 +25,7 @@ export default function ProfileDetail() {
                 </div>
                 <div className="ms-3" style={{ marginTop: '130px' }}>
                   <MDBTypography tag="h5">{userProfile.username}</MDBTypography>
-                  <MDBCardText>Joined on {userProfile.timestamp_day.toDateString()}</MDBCardText>
+                  <MDBCardText>Joined on {new Date(userProfile.timestamp_day).toDateString()}</MDBCardText>
                 </div>
               </div>
               <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }}>
@@ -44,29 +47,10 @@ export default function ProfileDetail() {
                   <MDBCardText className="lead fw-normal mb-0">My Collections</MDBCardText>
                 </div>
                 <MDBRow className="d-flex justify-content-center align-items-center">
-                  <MDBCol className="mb-2">
-                    <MDBCardImage src={collection1}
-                      alt="image 1" className="rounded-3" style={{ width: '200px', height: '300px', objectFit: 'cover'}} />
-                    <MDBCardText className="font-italic mb-1">Collection1</MDBCardText>
-                  </MDBCol>
-                  <MDBCol className="mb-2">
-                    <MDBCardImage src={collection2}
-                      alt="image 2" className="rounded-3" style={{ width: '200px', height: '300px', objectFit: 'cover'}} />
-                      <MDBCardText className="font-italic mb-1">Collection2</MDBCardText>
-                  </MDBCol>
+                <CollectionList />
+                 
                 </MDBRow>
-                <MDBRow className="g-2">
-                  <MDBCol className="mb-2">
-                    <MDBCardImage src={collection3}
-                      alt="image 3" className="rounded-3" style={{ width: '200px', height: '300px', objectFit: 'cover'}} />
-                      <MDBCardText className="font-italic mb-1">Collection3</MDBCardText>
-                  </MDBCol>
-                  <MDBCol className="mb-2">
-                    <MDBCardImage src={collection4}
-                      alt="image 4" className="rounded-3" style={{ width: '200px', height: '300px', objectFit: 'cover'}} />
-                      <MDBCardText className="font-italic mb-1">Collection4</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
+                
                 <div className="d-flex justify-content-between align-items-center mb-4">
                   <MDBCardText className="lead fw-normal mb-0">MyStats</MDBCardText>
                 </div>
