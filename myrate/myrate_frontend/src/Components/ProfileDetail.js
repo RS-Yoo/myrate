@@ -10,7 +10,7 @@ import CollectionList from "../Components/CollectionList";
 import LoginForm from "../Components/LoginForm";
 import { EditText, EditTextarea } from 'react-edit-text';
 import 'react-edit-text/dist/index.css';
-
+import Avatar from 'react-avatar';
 import axios from "axios";
 // Importing toastify module
 import {toast} from 'react-toastify';
@@ -43,15 +43,6 @@ useEffect(() => {
   async function handleSave ({ name, value, previousValue })  {
     setText(value);
     const userData = {
-      /*
-      username: userProfile.username,
-      password: userProfile.password,
-      firstname: userProfile.firstname,
-      lastname: userProfile.lastname,
-      email: userProfile.email,
-      role: userProfile.role,
-      day_joined: userProfile.day_joined,
-      */
       about: value,
     }
     console.log("userdata: " + JSON.stringify(userData));
@@ -62,6 +53,8 @@ useEffect(() => {
       toast('Saved About You!').catch(error => {
         window.alert(error);
 
+      }).error(error => {
+        setText("Click here to edit about you!");
       });
     })
   };
@@ -86,8 +79,7 @@ useEffect(() => {
             <MDBCard>
               <div className="rounded-top text-white d-flex flex-row" style={{ backgroundColor: '#000', height: '200px' }}>
                 <div className="ms-4 mt-5 d-flex flex-column" style={{ width: '150px' }}>
-                  <MDBCardImage src={userImage}
-                    alt="Generic placeholder image" className="mt-4 mb-2 img-thumbnail" fluid style={{ width: '150px', zIndex: '1' }} />
+                 <Avatar className="ms-3" style={{ marginTop: '50px' }} color={Avatar.getRandomColor('sitebase', ['red', 'green', 'cyan', 'pink', 'purple'])} name={userProfile.username} />
                 </div>
                 <div className="ms-3" style={{ marginTop: '130px' }}>
                   <MDBTypography tag="h5">{userProfile.username}</MDBTypography>
