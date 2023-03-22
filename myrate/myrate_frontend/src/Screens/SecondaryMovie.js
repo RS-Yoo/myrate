@@ -22,6 +22,7 @@ const SecondaryMovie = () => {
     const location = useLocation();
     const { movieDetails } = location.state;
     const { title, overview, poster_path, release_date, _id } = movieDetails['movie'];
+  
 
     const newMovie = {
         title: title,
@@ -30,6 +31,8 @@ const SecondaryMovie = () => {
         release_date: release_date,
         api_id: movieDetails['movie'].id,
     };
+
+
 
     const openModal = () => {
         setModalOpen(true);
@@ -171,6 +174,7 @@ const SecondaryMovie = () => {
             </div>
             <ReviewForm title={title} currRate={rate?rate:''} currReview={review?review:''} media={newMovie} mediaId={mediaId} mediaType={"movie"} reviewId={reviewId}  />
             {/* <RelatedTitlesSliderList apiId={apiId} isMovie={true} /> */}
+
 
             <ReviewList mediaId={mediaId}></ReviewList>
         </>
