@@ -34,8 +34,8 @@ const Landing = () => {
             </div>
             </section>
             < BookSelector />
-            < TrendingMovies timeFrame={"day"} movieCount={10} />
-            < TrendingTV timeFrame={"day"} tvCount={10} />
+            < TrendingMovies timeFrame={"day"} movieCount={20} />
+            < TrendingTV timeFrame={"day"} tvCount={20} />
         </>
     );
 };

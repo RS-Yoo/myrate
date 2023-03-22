@@ -61,13 +61,14 @@ const LoginForm = () => {
                 setDuplicatUsername(false);
                 
                 const hashedPassword = bcrypt.hashSync(password, saltRounds);
-
+                let day = new Date();
                 const userCredentials = {
                     firstname: firstname,
                     lastname: lastname,
                     email: email,
                     username: username,
                     password: hashedPassword,
+                    day_joined: day,
                 };
 
                 try { 

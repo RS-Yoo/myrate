@@ -64,8 +64,8 @@ userRoutes.route("/user/finduser/:username").get(function (req, res) {
 userRoutes.route("/user/finduser").get(function (req, res) {
   let db_connect = dbo.getDb();
   let username = req.query.username;
-  let password = req.query.password;
-  const query = {userTitle: title, userAuthor: author};
+ // let password = req.query.password;
+  const query = {username: username};
   const user = db_connect.collection("users").findOne(query, function (err, result) {
     if (err) {
       console.log("error in get user by title and author: " + err);
@@ -86,6 +86,8 @@ userRoutes.route("/user/add").post(function (req, response) {
    lastname: req.body.lastname,
    email: req.body.email,
    role: req.body.role,
+   day_joined: req.body.day_joined,
+   about: req.body.about,
  };
  db_connect.collection("users").insertOne(myobj, function (err, res) {
    if (err) throw err;
@@ -94,24 +96,28 @@ userRoutes.route("/user/add").post(function (req, response) {
 });
  
 // This section will help you update a user by id.
-userRoutes.route("/update/:id").post(function (req, response) {
+userRoutes.route("/user/updateAbout/:username").post(function (req, response) {
  let db_connect = dbo.getDb();
- let myquery = { _id: ObjectId(req.params.id) };
+ let myquery = { username: req.params.username };
  let newvalues = {
    $set: {
+    /*
     username: req.body.username,
     password: req.body.password,
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     email: req.body.email,
     role: req.body.role,
+    day_joined: req.body.day_joined,
+    */
+    about: req.body.about,
    },
  };
  db_connect
    .collection("users")
    .updateOne(myquery, newvalues, function (err, res) {
      if (err) throw err;
-     console.log("1 document updated");
+     console.log("1 user updated");
      response.json(res);
    });
 });
