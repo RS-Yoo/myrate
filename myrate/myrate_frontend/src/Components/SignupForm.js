@@ -68,7 +68,7 @@ const LoginForm = () => {
                     email: email,
                     username: username,
                     password: hashedPassword,
-                    timestamp_day: day,
+                    day_joined: day,
                 };
 
                 try { 

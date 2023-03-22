@@ -18,6 +18,7 @@
     "react-bootstrap": "^2.7.2",
     "react-bootstrap-validation": "^0.1.11",
     "react-dom": "^18.2.0",
+    "react-edit-text": "^5.1.0",
     "react-horizontal-scrolling-menu": "^3.2.3",
     "react-redux": "^8.0.5",
     "react-router": "^6.4.3",
@@ -52,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-edit-text": "^5.0.1",
     "eslint-config-react-app": "^7.0.1",
     "jest-editor-support": "^30.2.1"
   }

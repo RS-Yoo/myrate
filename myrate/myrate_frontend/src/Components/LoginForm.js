@@ -48,6 +48,7 @@ const LoginForm = () => {
                     email: response.data.email,
                     username: response.data.username,
                     password: response.data.password,
+                    day_joined: response.data.day_joined,
                 };
                 const PASSWORD_MATCH = bcrypt.compareSync(password, userCredentials.password);
 
