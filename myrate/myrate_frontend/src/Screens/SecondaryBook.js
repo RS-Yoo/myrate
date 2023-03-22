@@ -7,6 +7,10 @@ import axios from "axios";
 import CollectionModal from "../Components/Modals/CollectionModal"
 import ReviewList from "../Components/ReviewList";
 import ReviewForm from "../Components/ReviewForm";
+import StarRating from "../Components/StarRating";
+import Rating from '@mui/material/Rating';
+import Box from '@mui/material/Box';
+import StarIcon from '@mui/icons-material/Star';
 
 
 const SecondaryBook = () => {
@@ -15,6 +19,8 @@ const SecondaryBook = () => {
     const [reviewId, setReviewId] = useState();
     const [mediaId, setMediaId] = useState();
     const [modalOpen, setModalOpen] = useState(false); 
+    //const [value, setValue] = useState(2);
+    const [hover, setHover] = useState(-1);
 
     const userProfile = useSelector((state) => { return state.userProfile; });
 
@@ -32,6 +38,26 @@ const SecondaryBook = () => {
         description: description,
         purchaseLinks: purchaseLinks,
     };
+
+    const labels = {
+        0.5: 'Useless',
+        1: 'Useless+',
+        1.5: 'Poor',
+        2: 'Poor+',
+        2.5: 'Ok',
+        3: 'Ok+',
+        3.5: 'Good',
+        4: 'Good+',
+        4.5: 'Excellent',
+        5: 'Excellent+',
+      };
+      
+      function getLabelText(value) {
+        return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
+      }
+
+
+
 
     const openModal = () => {
         setModalOpen(true);
@@ -231,19 +257,39 @@ const SecondaryBook = () => {
                 </div>
                 <hr class="solid" />
             </div>
+            <div>
+               
+            </div>
 
             <form>
                 <div class="form-group" className="userReviewDiv">
                     <div class="form-group col-md-4">
                         <label for="overallRating">Overall Rating*</label>
-                        <select id="overallRating" class="form-control" onChange={handleChangeSelect} value={rate?rate:''}>
-                            <option selected hidden />
-                            <option value="1">Poor</option>
-                            <option value="2">Fair</option>
-                            <option value="3">Average</option>
-                            <option value="4">Good</option>
-                            <option value="5">Excellent</option>
-                        </select>
+                        <Box
+                            sx={{
+                                width: 200,
+                                display: 'flex',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Rating
+                                name="hover-feedback"
+                                value={rate?rate:''}
+                                precision={0.5}
+                                getLabelText={getLabelText}
+                                onChange={(event, newValue) => {
+                                    setRate(newValue);
+                                    //setValue(newValue);
+                                }}
+                                onChangeActive={(event, newHover) => {
+                                    setHover(newHover);
+                                }}
+                                emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+                            />
+                            {rate !== null && (
+                                <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : rate]}</Box>
+                            )}
+                        </Box>
                     </div>
                     <label for="userReview" className="userReviewLabel">Detailed Review For - {toTitleCase(bookTitle)}*</label>
                     <textarea class="form-control" id="userReview" rows="3" placeholder="Tell others what you thought!" onChange={handleTextChange} value={review?review:""}></textarea>
