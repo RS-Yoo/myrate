@@ -3,6 +3,12 @@ import { useSelector } from 'react-redux';
 import "./ReviewForm.css";
 import axios from "axios";
 
+import Rating from '@mui/material/Rating';
+import Box from '@mui/material/Box';
+import StarIcon from '@mui/icons-material/Star';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const ReviewForm = (props) => {
     const mediaId = props.mediaId;
 
@@ -14,6 +20,27 @@ const ReviewForm = (props) => {
     const [newRate, setNewRate] = useState(props.currRate);
     const [newReview, setNewReview] = useState(props.currReview);
     const [reviewId, setReviewId] = useState(props.reviewId);
+
+    const [hover, setHover] = useState(-1);
+    
+    const labels = {
+        0.5: 'Waste of time',
+        1: 'Useless',
+        1.5: 'Regret',
+        2: 'Meh',
+        2.5: 'Not bad',
+        3: 'Average',
+        3.5: 'Good',
+        4: 'Great',
+        4.5: 'Excellent',
+        5: 'BEST EVER!',
+      };
+      
+      function getLabelText(value) {
+        return rate?.timestamp_day?rate:'';
+//        return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
+      }
+      toast.configure();
 
     useEffect(() => {
         setNewRate(props.currRate);
@@ -50,6 +77,8 @@ const ReviewForm = (props) => {
                 axios.post(`http://localhost:5000/rating/add`, reviewData
                 ).then(response => {
                     console.log("Posted rating");
+                    
+                    toast('Rating Saved!', {position: toast.POSITION.TOP_CENTER});
                 }).catch(response => {
                     console.log("Error saving rating: " + response);
                 })
@@ -59,6 +88,8 @@ const ReviewForm = (props) => {
                     axios.post(`http://localhost:5000/rating/update/${review._id}`, reviewData
                     ).then(response => {
                     console.log("Updated rating");
+                    
+                    toast('Rating Updated!', {position: toast.POSITION.TOP_CENTER});
                 }).catch(response => {
                     console.log("Error saving rating: " + response);
                 })
@@ -100,6 +131,7 @@ const ReviewForm = (props) => {
                     axios.post(`http://localhost:5000/rating/add`, reviewData
                     ).then(response => {
                         console.log("Posted rating");
+                        toast('Rating Saved!', {position: toast.POSITION.TOP_CENTER});
                     }).catch(response => {
                         console.log("Error saving rating: " + response);
                     })
@@ -109,6 +141,7 @@ const ReviewForm = (props) => {
                         axios.post(`http://localhost:5000/rating/update/${review._id}`, reviewData
                         ).then(response => {
                         console.log("Updated rating");
+                        toast('Rating Updated!', {position: toast.POSITION.TOP_CENTER});
                     }).catch(response => {
                         console.log("Error saving rating: " + response);
                     })
@@ -158,14 +191,31 @@ const ReviewForm = (props) => {
                 <div class="form-group" className="reviewDiv">
                     <div class="form-group col-md-4">
                         <label for="overallRating">Overall Rating*</label>
-                        <select id="overallRating" class="form-control" onChange={handleChangeSelect} value={newRate}>
-                            <option selected hidden />
-                            <option value={1}>Poor</option>
-                            <option value={2}>Fair</option>
-                            <option value={3}>Average</option>
-                            <option value={4}>Good</option>
-                            <option value={5}>Excellent</option>
-                        </select>
+                        <Box
+                            sx={{
+                                width: 200,
+                                display: 'flex',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Rating
+                                name="hover-feedback"
+                                value={newRate?newRate:''}
+                                precision={0.5}
+                                getLabelText={getLabelText}
+                                onChange={(event, newValue) => {
+                                    setNewRate(newValue);
+                                    //setValue(newValue);
+                                }}
+                                onChangeActive={(event, newHover) => {
+                                    setHover(newHover);
+                                }}
+                                emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+                            />
+                            {rate !== null && (
+                                <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : newRate]}</Box>
+                            )}
+                        </Box>
                     </div>
                     <label for="userReview" className="userReviewLabel">Detailed Review For - {props.title}*</label>
                     <textarea class="form-control" id="userReview" rows="3" placeholder="Tell others what you thought!" onChange={handleTextChange} defaultValue={newReview}></textarea>

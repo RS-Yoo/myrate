@@ -5,6 +5,7 @@ import Rating from '@mui/material/Rating';
 import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
+import Button from 'react-bootstrap/Button';
 
 import {
   MDBCard,
@@ -12,7 +13,8 @@ import {
   MDBCardBody,
   MDBCardTitle,
   MDBCardText,
-  MDBBtn
+  MDBBtn,
+  MDBCardFooter
 } from 'mdb-react-ui-kit';
 import StarRating from "./StarRating";
 
@@ -36,6 +38,7 @@ const RatingCard = (rating) =>
     const [description, setDescription] = useState('description');
     const [username, setUsername] = useState('username');
 
+
   return (
     <MDBCard>
       <MDBCardHeader>
@@ -46,7 +49,7 @@ const RatingCard = (rating) =>
         <MDBCardText>{rating.rating.review}</MDBCardText>
         <div>
       <Checkbox name="customized-color" icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
-    </div>
+      </div>
       </MDBCardBody>
     </MDBCard>
   );
