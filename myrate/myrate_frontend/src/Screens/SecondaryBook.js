@@ -181,6 +181,7 @@ const SecondaryBook = () => {
                     axios.post(`http://localhost:5000/rating/add`, reviewData
                     ).then(response => {
                         console.log("Posted rating");
+                        toast('Rating Saved!', {position: toast.POSITION.TOP_CENTER});
                     }).catch(response => {
                         console.log("Error saving rating: " + response);
                         toast('Error updating. Please try again.', {position: toast.POSITION.TOP_CENTER});
