@@ -7,6 +7,12 @@ import axios from "axios";
 import CollectionModal from "../Components/Modals/CollectionModal"
 import ReviewList from "../Components/ReviewList";
 import ReviewForm from "../Components/ReviewForm";
+import StarRating from "../Components/StarRating";
+import Rating from '@mui/material/Rating';
+import Box from '@mui/material/Box';
+import StarIcon from '@mui/icons-material/Star';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const SecondaryBook = () => {
@@ -15,6 +21,8 @@ const SecondaryBook = () => {
     const [reviewId, setReviewId] = useState();
     const [mediaId, setMediaId] = useState();
     const [modalOpen, setModalOpen] = useState(false); 
+    //const [value, setValue] = useState(2);
+    const [hover, setHover] = useState(-1);
 
     const userProfile = useSelector((state) => { return state.userProfile; });
 
@@ -33,6 +41,27 @@ const SecondaryBook = () => {
         purchaseLinks: purchaseLinks,
     };
 
+    const labels = {
+        0.5: 'Waste of time',
+        1: 'Useless',
+        1.5: 'Regret',
+        2: 'Meh',
+        2.5: 'Not bad',
+        3: 'Average',
+        3.5: 'Good',
+        4: 'Great',
+        4.5: 'Excellent',
+        5: 'BEST EVER!',
+      };
+      
+      function getLabelText(value) {
+        return rate?.timestamp_day?rate:'';
+//        return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
+      }
+
+
+
+
     const openModal = () => {
         setModalOpen(true);
     };
@@ -42,7 +71,10 @@ const SecondaryBook = () => {
 
     // store book's ID for creating ratings/reviews
     let ratingsList = null;
-    // 
+    
+    toast.configure();
+
+
     useEffect(() => {
         axios.get(`http://localhost:5000/book/findbook`, {
             params: {
@@ -149,8 +181,10 @@ const SecondaryBook = () => {
                     axios.post(`http://localhost:5000/rating/add`, reviewData
                     ).then(response => {
                         console.log("Posted rating");
+                        toast('Rating Saved!', {position: toast.POSITION.TOP_CENTER});
                     }).catch(response => {
                         console.log("Error saving rating: " + response);
+                        toast('Error updating. Please try again.', {position: toast.POSITION.TOP_CENTER});
                     })
                 }
                 else {
@@ -158,6 +192,8 @@ const SecondaryBook = () => {
                     axios.post(`http://localhost:5000/rating/update/${currReview._id}`, reviewData
                     ).then(response => {
                     console.log("Updated rating");
+                    window.location.reload(false);
+                    toast('Rating Updated!', {position: toast.POSITION.TOP_CENTER});
                 })
                 }
             })
@@ -231,19 +267,39 @@ const SecondaryBook = () => {
                 </div>
                 <hr class="solid" />
             </div>
+            <div>
+               
+            </div>
 
             <form>
                 <div class="form-group" className="userReviewDiv">
                     <div class="form-group col-md-4">
                         <label for="overallRating">Overall Rating*</label>
-                        <select id="overallRating" class="form-control" onChange={handleChangeSelect} value={rate?rate:''}>
-                            <option selected hidden />
-                            <option value="1">Poor</option>
-                            <option value="2">Fair</option>
-                            <option value="3">Average</option>
-                            <option value="4">Good</option>
-                            <option value="5">Excellent</option>
-                        </select>
+                        <Box
+                            sx={{
+                                width: 200,
+                                display: 'flex',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Rating
+                                name="hover-feedback"
+                                value={rate?rate:''}
+                                precision={0.5}
+                                getLabelText={getLabelText}
+                                onChange={(event, newValue) => {
+                                    setRate(newValue);
+                                    //setValue(newValue);
+                                }}
+                                onChangeActive={(event, newHover) => {
+                                    setHover(newHover);
+                                }}
+                                emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+                            />
+                            {rate !== null && (
+                                <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : rate]}</Box>
+                            )}
+                        </Box>
                     </div>
                     <label for="userReview" className="userReviewLabel">Detailed Review For - {toTitleCase(bookTitle)}*</label>
                     <textarea class="form-control" id="userReview" rows="3" placeholder="Tell others what you thought!" onChange={handleTextChange} value={review?review:""}></textarea>

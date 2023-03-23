@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
 import axios from "axios";
 import "./ReviewList.css";
+import RatingCard from "./RatingCard";
 
 const ReviewList = (props) => {
     const [reviews, setReviews] = useState();
@@ -31,15 +32,9 @@ const ReviewList = (props) => {
                     <h4>Reviews from others</h4>
                     {reviews ? reviews.map(r => (
                         <>
+                        <RatingCard rating = {r}/>
                         <div className="reviewItem">
-                            <div className="reviewUser">
-                            {r.user_username}
-                            </div>
-                            <div className="reviewRating">
-                                Rating: {r.stars}
-                            </div>
-                            <div className="reviewContent">{r.review}</div>
-                        </div>
+                         </div>
                         </>
                     ))
                     : null }
