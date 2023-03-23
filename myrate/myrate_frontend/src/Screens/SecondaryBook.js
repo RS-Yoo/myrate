@@ -11,6 +11,8 @@ import StarRating from "../Components/StarRating";
 import Rating from '@mui/material/Rating';
 import Box from '@mui/material/Box';
 import StarIcon from '@mui/icons-material/Star';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const SecondaryBook = () => {
@@ -53,7 +55,8 @@ const SecondaryBook = () => {
       };
       
       function getLabelText(value) {
-        return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
+        return rate?.timestamp_day?rate:'';
+//        return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
       }
 
 
@@ -68,7 +71,10 @@ const SecondaryBook = () => {
 
     // store book's ID for creating ratings/reviews
     let ratingsList = null;
-    // 
+    
+    toast.configure();
+
+
     useEffect(() => {
         axios.get(`http://localhost:5000/book/findbook`, {
             params: {
@@ -177,6 +183,7 @@ const SecondaryBook = () => {
                         console.log("Posted rating");
                     }).catch(response => {
                         console.log("Error saving rating: " + response);
+                        toast('Error updating. Please try again.', {position: toast.POSITION.TOP_CENTER});
                     })
                 }
                 else {
@@ -184,6 +191,8 @@ const SecondaryBook = () => {
                     axios.post(`http://localhost:5000/rating/update/${currReview._id}`, reviewData
                     ).then(response => {
                     console.log("Updated rating");
+                    window.location.reload(false);
+                    toast('Rating Updated!', {position: toast.POSITION.TOP_CENTER});
                 })
                 }
             })
