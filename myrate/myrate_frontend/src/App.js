@@ -10,6 +10,7 @@ import Profile from "./Screens/Profile";
 import LoginScreen from "./Screens/LoginScreen";
 import SearchPage from "./Screens/SearchPage";
 import SignupScreen from "./Screens/SignupScreen";
+import MyHealth from "./Screens/MyHealth";
 
 import {
     BrowserRouter as Router,
@@ -97,6 +98,7 @@ const App = () => {
                 <Route path="/login" element={<LoginScreen />} />
                 <Route path="/search-page" element={<SearchPage />} />
                 <Route path="/signup" element={<SignupScreen />} />
+                <Route path="/myHealth" element={<MyHealth />} />
             </Routes>
         </Router>
     );
