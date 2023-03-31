@@ -37,7 +37,7 @@ const Landing = () => {
             < BookSelector />
             < TrendingMovies timeFrame={"day"} movieCount={20} />
             < TrendingTV timeFrame={"day"} tvCount={20} />
-            <p id="myHealthLink">Looking to improve your health and fitness? Head over to <Link to="/myHealth">MyHealth</Link> to learn more.</p>
+            <p id="myHealthLink">Need help staying on track with your health and fitness? Head over to <Link to="/myHealth">MyHealth</Link> to learn more.</p>
         </>
     );
 };

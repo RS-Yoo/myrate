@@ -106,14 +106,14 @@ const MyHealth = () => {
                 "difficulty": "intermediate",
                 "instructions": "Get into a prone position on the floor, supporting your weight on your toes and your forearms. Your arms are bent and directly below the shoulder. Keep your body straight at all times, and hold this position as long as possible. To increase difficulty, an arm or leg can be raised."
             },
-            {
-                "name": "Bottoms Up",
-                "type": "strength",
-                "muscle": "abdominals",
-                "equipment": "None",
-                "difficulty": "intermediate",
-                "instructions": "Begin by lying on your back on the ground. Your legs should be straight and your arms at your side. This will be your starting position. To perform the movement, tuck the knees toward your chest by flexing the hips and knees. Following this, extend your legs directly above you so that they are perpendicular to the ground. Rotate and elevate your pelvis to raise your glutes from the floor. After a brief pause, return to the starting position."
-            },
+            // {
+            //     "name": "Bottoms Up",
+            //     "type": "strength",
+            //     "muscle": "abdominals",
+            //     "equipment": "None",
+            //     "difficulty": "intermediate",
+            //     "instructions": "Begin by lying on your back on the ground. Your legs should be straight and your arms at your side. This will be your starting position. To perform the movement, tuck the knees toward your chest by flexing the hips and knees. Following this, extend your legs directly above you so that they are perpendicular to the ground. Rotate and elevate your pelvis to raise your glutes from the floor. After a brief pause, return to the starting position."
+            // },
             {
                 "name": "Suspended ab fall-out",
                 "type": "strength",
@@ -162,14 +162,14 @@ const MyHealth = () => {
                 "difficulty": "intermediate",
                 "instructions": "Begin in a prone position on the floor. Support your weight on your hands and toes, with your feet together and your body straight. Your arms should be bent to 90 degrees. This will be your starting position. Initiate the movement by raising one foot off of the ground. Externally rotate the leg and bring the knee toward your elbow, as far forward as possible. Return this leg to the starting position and repeat on the opposite side."
             },
-            {
-                "name": "Cocoons",
-                "type": "strength",
-                "muscle": "abdominals",
-                "equipment": "None",
-                "difficulty": "intermediate",
-                "instructions": "Begin by lying on your back on the ground. Your legs should be straight and your arms extended behind your head. This will be your starting position. To perform the movement, tuck the knees toward your chest, rotating your pelvis to lift your glutes from the floor. As you do so, flex the spine, bringing your arms back over your head to perform a simultaneous crunch motion. After a brief pause, return to the starting position."
-            }
+            // {
+            //     "name": "Cocoons",
+            //     "type": "strength",
+            //     "muscle": "abdominals",
+            //     "equipment": "None",
+            //     "difficulty": "intermediate",
+            //     "instructions": "Begin by lying on your back on the ground. Your legs should be straight and your arms extended behind your head. This will be your starting position. To perform the movement, tuck the knees toward your chest, rotating your pelvis to lift your glutes from the floor. As you do so, flex the spine, bringing your arms back over your head to perform a simultaneous crunch motion. After a brief pause, return to the starting position."
+            // }
         ],
         "Biceps" : [
             {
@@ -318,14 +318,14 @@ const MyHealth = () => {
                 "difficulty": "beginner",
                 "instructions": "Place a block about 12 inches in front of a flat bench. Sit on the bench and place the ball of your feet on the block. Have someone place a barbell over your upper thighs about 3 inches above your knees and hold it there. This will be your starting position. Raise up on your toes as high as possible as you squeeze the calves and as you breathe out. After a second contraction, slowly go back to the starting position. Tip: To get maximum benefit stretch your calves as far as you can. Repeat for the recommended amount of repetitions.  Variations: You can use the smith machine or the seated calf raise machine in order to perform this exercise. Alternatively, you can also use dumbbells by placing one on top of each thigh."
             },
-            {
-                "name": "Balance Board",
-                "type": "strength",
-                "muscle": "calves",
-                "equipment": "Other",
-                "difficulty": "beginner",
-                "instructions": "Note: This exercise is designed to increase balance.  Place a balance board in front of you. Stand up on it and try to balance yourself. Hold the balance for as long as desired.  Caution: If your balance is poor, start out with one of the less challenging boards. Variations: You can perform this exercise using various types of balance boards. Some are more challenging than others."
-            },
+            // {
+            //     "name": "Balance Board",
+            //     "type": "strength",
+            //     "muscle": "calves",
+            //     "equipment": "Other",
+            //     "difficulty": "beginner",
+            //     "instructions": "Note: This exercise is designed to increase balance.  Place a balance board in front of you. Stand up on it and try to balance yourself. Hold the balance for as long as desired.  Caution: If your balance is poor, start out with one of the less challenging boards. Variations: You can perform this exercise using various types of balance boards. Some are more challenging than others."
+            // },
             {
                 "name": "Weighted donkey calf raise",
                 "type": "strength",
@@ -565,7 +565,7 @@ const MyHealth = () => {
                 "instructions": "Using the leg pad of a lat pulldown machine or a preacher bench, position yourself so that your ankles are under the pads, knees on the seat, and you are facing away from the machine. You should be upright and maintaining good posture. This will be your starting position. Lower yourself under control until your knees are almost completely straight. Remaining in control, raise yourself back up to the starting position. If you are unable to complete a rep, use a band, a partner, or push off of a box to aid in completing a repetition."
             },
             {
-                "name": "Glute ham raise-",
+                "name": "Glute ham raise",
                 "type": "strength",
                 "muscle": "hamstrings",
                 "equipment": "None",
@@ -736,14 +736,14 @@ const MyHealth = () => {
                 "difficulty": "beginner",
                 "instructions": "Set up in a power rack with the bar on the pins. The pins should be set to the desired point; just below the knees, just above, or in the mid thigh position. Attach bands to the base of the rack, or secure them with dumbbells. Attach the other end to the bar. You may need to choke the bands to provide tension. Position yourself against the bar in proper deadlifting position. Your feet should be under your hips, your grip shoulder width, back arched, and hips back to engage the hamstrings. Since the weight is typically heavy, you may use a mixed grip, a hook grip, or use straps to aid in holding the weight. With your head looking forward, extend through the hips and knees, pulling the weight up and back until lockout. Be sure to pull your shoulders back as you complete the movement. Return the weight to the pins and repeat."
             },
-            {
-                "name": "Superman",
-                "type": "stretching",
-                "muscle": "lower_back",
-                "equipment": "None",
-                "difficulty": "intermediate",
-                "instructions": "To begin, lie straight and face down on the floor or exercise mat. Your arms should be fully extended in front of you. This is the starting position. Simultaneously raise your arms, legs, and chest off of the floor and hold this contraction for 2 seconds. Tip: Squeeze your lower back to get the best results from this exercise. Remember to exhale during this movement. Note: When holding the contracted position, you should look like superman when he is flying. Slowly begin to lower your arms, legs and chest back down to the starting position while inhaling. Repeat for the recommended amount of repetitions prescribed in your program.  Variations: You can also perform this exercise using one arm and leg at a time. Simply elevating your left leg, arm and side of your chest and do the same with the right side."
-            }
+            // {
+            //     "name": "Superman",
+            //     "type": "stretching",
+            //     "muscle": "lower_back",
+            //     "equipment": "None",
+            //     "difficulty": "intermediate",
+            //     "instructions": "To begin, lie straight and face down on the floor or exercise mat. Your arms should be fully extended in front of you. This is the starting position. Simultaneously raise your arms, legs, and chest off of the floor and hold this contraction for 2 seconds. Tip: Squeeze your lower back to get the best results from this exercise. Remember to exhale during this movement. Note: When holding the contracted position, you should look like superman when he is flying. Slowly begin to lower your arms, legs and chest back down to the starting position while inhaling. Repeat for the recommended amount of repetitions prescribed in your program.  Variations: You can also perform this exercise using one arm and leg at a time. Simply elevating your left leg, arm and side of your chest and do the same with the right side."
+            // }
         ],
         "Middle Back" : [
             {
@@ -802,14 +802,14 @@ const MyHealth = () => {
                 "difficulty": "intermediate",
                 "instructions": "Put weight on one of the ends of an Olympic barbell. Make sure that you either place the other end of the barbell in the corner of two walls; or put a heavy object on the ground so the barbell cannot slide backward. Bend forward until your torso is as close to parallel with the floor as you can and keep your knees slightly bent. Now grab the bar with one arm just behind the plates on the side where the weight was placed and put your other hand on your knee. This will be your starting position. Pull the bar straight up with your elbow in (to maximize back stimulation) until the plates touch your lower chest. Squeeze the back muscles as you lift the weight up and hold for a second at the top of the movement. Breathe out as you lift the weight. Tip: Do not allow for any swinging of the torso. Only the arm should move. Slowly lower the bar to the starting position getting a nice stretch on the lats. Tip: Do not let the plates touch the floor. To ensure the best range of motion, I recommend using small plates (25-lb ones) as opposed to larger plates (like 35-45lb ones). Repeat for the recommended amount of repetitions and switch arms.  Variations: You can perform this exercise using a low pulley."
             },
-            {
-                "name": "Rower",
-                "type": "cardio",
-                "muscle": "middle_back",
-                "equipment": "Machine",
-                "difficulty": "intermediate",
-                "instructions": "To begin, seat yourself on the rower. Make sure that your heels are resting comfortably against the base of the foot pedals and that the straps are secured. Select the program that you wish to use, if applicable. Sit up straight and bend forward at the hips. There are three phases of movement when using a rower. The first phase is when you come forward on the rower. Your knees are bent and against your chest. Your upper body is leaning slightly forward while still maintaining good posture.Next, push against the foot pedals and extend your legs while bringing your hands to your upper abdominal area, squeezing your shoulders back as you do so. To avoid straining your back, use primarily your leg and hip muscles. The recovery phase simply involves straightening your arms, bending the knees, and bringing your body forward again as you transition back into the first phase."
-            },
+            // {
+            //     "name": "Rower",
+            //     "type": "cardio",
+            //     "muscle": "middle_back",
+            //     "equipment": "Machine",
+            //     "difficulty": "intermediate",
+            //     "instructions": "To begin, seat yourself on the rower. Make sure that your heels are resting comfortably against the base of the foot pedals and that the straps are secured. Select the program that you wish to use, if applicable. Sit up straight and bend forward at the hips. There are three phases of movement when using a rower. The first phase is when you come forward on the rower. Your knees are bent and against your chest. Your upper body is leaning slightly forward while still maintaining good posture.Next, push against the foot pedals and extend your legs while bringing your hands to your upper abdominal area, squeezing your shoulders back as you do so. To avoid straining your back, use primarily your leg and hip muscles. The recovery phase simply involves straightening your arms, bending the knees, and bringing your body forward again as you transition back into the first phase."
+            // },
             {
                 "name": "Seated Cable Rows",
                 "type": "strength",
@@ -877,7 +877,7 @@ const MyHealth = () => {
                 "instructions": "Beginning Position:  Use the floor-to-shoulder lifting technique described in the Power Clean exercise to move the bar from the floor to the shoulders.  Upward Movement Phase:  Slightly flex the hips and knees, keeping torso erect. Immediately follow with an explosive push upward by extending the knees. Keep torso erect and tensed. At maximum hip and knee extension, shift body weight to balls of feet and extend ankle joints. At maximum plantar flexion, push bar from the shoulders. Push the bar with the arms to a fully extended elbow position overhead.  Downward Movement Phase:  Lower bar to shoulders. Flex hips and knees slightly as bar touches shoulders. Straighten the hips and knees before the upward movement phase begins again.  Breathing:  Exhale through the sticking point of the upward movement phase. Inhale during the downward movement phase."
             },
             {
-                "name": "Power snatch-",
+                "name": "Power snatch",
                 "type": "olympic_weightlifting",
                 "muscle": "quadriceps",
                 "equipment": "Barbell",
@@ -900,14 +900,14 @@ const MyHealth = () => {
                 "difficulty": "intermediate",
                 "instructions": "Begin in a power rack with a box at the appropriate height behind you. Set up the bands either on band pegs or attached to the top of the rack, ensuring they will be directly above the bar during the squat. Attach the other end to the bar. Begin by stepping under the bar and placing it across the back of the shoulders. Squeeze your shoulder blades together and rotate your elbows forward, attempting to bend the bar across your shoulders. Remove the bar from the rack, creating a tight arch in your lower back, and step back into position. Place your feet wider for more emphasis on the back, glutes, adductors, and hamstrings, or closer together for more quad development. Keep your head facing forward. With your back, shoulders, and core tight, push your knees and butt out and you begin your descent. Sit back with your hips until you are seated on the box. Ideally, your shins should be perpendicular to the ground. Pause when you reach the box, and relax the hip flexors. Never bounce off of a box. Keeping the weight on your heels and pushing your feet and knees out, drive upward off of the box as you lead the movement with your head. Continue upward, maintaining tightness head to toe. Use care to return the barbell to the rack."
             },
-            {
-                "name": "Jumping rope",
-                "type": "cardio",
-                "muscle": "quadriceps",
-                "equipment": "None",
-                "difficulty": "intermediate",
-                "instructions": "Hold an end of the rope in each hand. Position the rope behind you on the ground. Raise your arms up and turn the rope over your head bringing it down in front of you. When it reaches the ground, jump over it. Find a good turning pace that can be maintained. Different speeds and techniques can be used to introduce variation. Rope jumping is exciting, challenges your coordination, and requires a lot of energy. A 150 lb person will burn about 350 calories jumping rope for 30 minutes, compared to over 450 calories running."
-            }
+            // {
+            //     "name": "Jumping rope",
+            //     "type": "cardio",
+            //     "muscle": "quadriceps",
+            //     "equipment": "None",
+            //     "difficulty": "intermediate",
+            //     "instructions": "Hold an end of the rope in each hand. Position the rope behind you on the ground. Raise your arms up and turn the rope over your head bringing it down in front of you. When it reaches the ground, jump over it. Find a good turning pace that can be maintained. Different speeds and techniques can be used to introduce variation. Rope jumping is exciting, challenges your coordination, and requires a lot of energy. A 150 lb person will burn about 350 calories jumping rope for 30 minutes, compared to over 450 calories running."
+            // }
         ],
         "Traps" : [
             {
@@ -1102,6 +1102,8 @@ const MyHealth = () => {
                     <Collapsible trigger={list['name']}>
                         <b>Equipment:</b>
                         <p>{list['equipment']}</p>
+                        <b>Movement Demo:</b>
+                        <p><a href={`https://www.youtube.com/results?search_query=${list['name']}`} target="_blank">{list['name']}</a></p>
                         <b>Description:</b>
                         <p>{list['instructions']}</p>
                     </Collapsible>
@@ -1122,12 +1124,12 @@ const MyHealth = () => {
             <Navbar />
             <div id="headerDiv">
                 <h1>MyHealth</h1>
-                <p>The starting point of a healthier life</p>
+                <p>All the basics and nothing more.</p>
             </div>
 
             {renderMuscleGroupSelector()}
             {renderExerciseList()}
-            <p id="healthLinks">Looking for more? Checkout <a href="https://www.menshealth.com/" target="_blank">menshealth.com</a>, <a href="https://www.womenshealthmag.com/" target="_blank">womenshealthmag.com</a>, and <a href="https://www.healthline.com/" target="_blank">healthline.com</a></p>
+            <p id="healthLinks">Looking for more? Checkout <a href="https://www.menshealth.com/" target="_blank">menshealth.com</a>, <a href="https://www.womenshealthmag.com/" target="_blank">womenshealthmag.com</a>, and <a href="https://www.healthline.com/" target="_blank">healthline.com</a> to get started.</p>
         </>
     );
 };
