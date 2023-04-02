@@ -1,0 +1,72 @@
+#exerciseContainer {
+    margin-top: 25px;
+    margin-left: 5px;
+}
+.exerciseDiv {
+    margin-left: 5px;
+    margin-top: 5px;
+    width: 40%;
+    display: inline-table;
+}
+
+.exerciseDiv :hover {
+    color: black;
+}
+
+.Collapsible__contentInner {
+    padding: 10px;
+    border-top: 0;
+    width: 100%;
+    background: whitesmoke;
+  }
+
+  .Collapsible__contentInner .p {
+      margin-bottom: 10px;
+      font-size: 14px;
+      line-height: 20px;
+      width: 100%;
+  }
+
+  .Collapsible__trigger {
+    display: block;
+    font-weight: 400;
+    text-decoration: none;
+    position: relative;
+    border: 1px solid white;
+    padding: 10px;
+    background: rgb(160, 194, 224);
+    color: white;
+    width: 100%;
+    text-align: center;
+  }
+
+  .Collapsible__trigger {
+    display: block;
+    font-weight: 400;
+    text-decoration: none;
+    position: relative;
+    border: 1px solid white;
+    padding: 10px;
+    background: rgb(160, 194, 224);
+    color: white;
+  }
+
+  #headerDiv {
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  #healthLinks {
+    margin-top: 25px;
+    margin-left: 15px;
+  }
+
+  #muscleGroupDropdown {
+    width: 250px;
+    margin-top: 15px;
+    margin-left: 15px;
+}
+
+#muscleGroupLabel {
+    margin-left: 15px;
+}
