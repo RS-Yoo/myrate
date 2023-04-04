@@ -11,6 +11,8 @@ import AddCollectionModal from "./Modals/AddCollectionModal";
 
 const CollectionList = () => {
 
+    const prePosterPath = "https://image.tmdb.org/t/p/original";
+
     const [style, set] = useSpring(() => ({
         transform: "perspective(500px) rotateY(0deg)"
       }));
@@ -102,7 +104,8 @@ const CollectionList = () => {
         <>
         <div class="wrap">
             <div className="list--container" {...bind()}>
-                {collections.map(c => (
+                {  
+                    collections.map(c => (
                     <animated.div
                     className="card"
                     id={c._id}
@@ -114,6 +117,9 @@ const CollectionList = () => {
                     <h3 className="card__title">
                         {c.title}
                         </h3>
+                    <div className="card__description">
+                        {c.description}
+                    </div>
                     </animated.div>
                 ))}
             </div>
