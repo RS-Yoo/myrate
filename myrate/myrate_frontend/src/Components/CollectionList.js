@@ -109,10 +109,11 @@ const CollectionList = () => {
                     onClick={handleClickCollection}
                     style={{
                         ...style,
-                        backgroundColor: "black"
                     }}
                     >
+                    <h3 className="card__title">
                         {c.title}
+                        </h3>
                     </animated.div>
                 ))}
             </div>
