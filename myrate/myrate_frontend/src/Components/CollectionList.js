@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { animated, useSpring } from "react-spring";
+import { useScroll } from "react-use-gesture";
 import { useSelector } from 'react-redux';
 import ScrollMenu from 'react-horizontal-scrolling-menu'
 import axios from 'axios';
@@ -8,6 +10,18 @@ import LoginForm from "../Components/LoginForm";
 import AddCollectionModal from "./Modals/AddCollectionModal";
 
 const CollectionList = () => {
+
+    const [style, set] = useSpring(() => ({
+        transform: "perspective(500px) rotateY(0deg)"
+      }));
+
+    const bind = useScroll(event => {
+        set({
+            transform: `perspective(500px) rotateY(${
+                event.scrolling ? event.delta[0] : 0
+            }deg)`
+        });
+    });
 
     const userProfile = useSelector((state) => { return state.userProfile; });
 
@@ -87,11 +101,19 @@ const CollectionList = () => {
     return (
         <>
         <div class="wrap">
-            <div class="scroll__wrap">
+            <div className="list--container" {...bind()}>
                 {collections.map(c => (
-                    <button class="scroll--element" id={c._id} onClick={handleClickCollection}>
+                    <animated.div
+                    className="card"
+                    id={c._id}
+                    onClick={handleClickCollection}
+                    style={{
+                        ...style,
+                        backgroundColor: "black"
+                    }}
+                    >
                         {c.title}
-                    </button>
+                    </animated.div>
                 ))}
             </div>
             </div>
