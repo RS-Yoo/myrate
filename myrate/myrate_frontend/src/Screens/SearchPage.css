@@ -9,12 +9,12 @@
 
   table {
     align-self: center;
-    border: 2px solid rgb(0, 0, 0);
+    
    
   }
   
   th {
-  border-bottom: 1px solid black;
+    font-size: xx-large;
   }
 
   tfoot {

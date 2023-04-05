@@ -26,9 +26,8 @@ const SearchPage = () => {
   const [calls, setCalls] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const [searchEntry, setSearchEntry] = useState(location.state);
-  console.log("search entry: " + JSON.stringify(searchEntry));
-
+  const [searchEntry, setSearchEntry] = useState(location.state.searchEntry);
+  console.log("search entry: " + JSON.stringify(location.state.searchEntry));
   // Base URL that needs to be pre-pended to 'poster_path'
   const prePosterPath = "https://image.tmdb.org/t/p/original";
 
