@@ -14,6 +14,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { func } from "prop-types";
 
 const SearchPage = () => {
 
@@ -25,7 +26,7 @@ const SearchPage = () => {
   const [calls, setCalls] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const { searchEntry } = location.state;
+  const [searchEntry, setSearchEntry] = useState(location.state);
   console.log("search entry: " + JSON.stringify(searchEntry));
 
   // Base URL that needs to be pre-pended to 'poster_path'
@@ -355,17 +356,14 @@ function secondfindbook(author, cover) {
     return result;
   }
 
-  function handleKeyDown (e) {
-    if (e.key === 'Enter') {
-      console.log('do validate');
-    }
-  }
-
   function refreshMedia(e) {
     setMedia(e);
   }
 
-
+  const handleChange = (e) => {
+    if(e.key === "Enter")
+      setSearchEntry(e.target.value);
+  }
 
   return (
     <>
@@ -387,14 +385,15 @@ function secondfindbook(author, cover) {
                 <NavDropdown.Item onClick={() => refreshMedia("TV Shows")}>TV Shows</NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <Form className="w-75 d-flex">
+            <Form className="w-75 d-flex" onSubmit={(e) => e.preventDefault()}>
             <Form.Control
+              id="searchInput"
               type="search"
               placeholder="Search"
               className="me-2"
-              aria-label="Search"
+              onKeyUp={(e) => handleChange(e)}
             />
-            <Button variant="outline-success">Search</Button>
+            <Button variant="outline-success" onClick={(e) => setSearchEntry(document.getElementById("searchInput").value)}>Search</Button>
           </Form>
           </Navbar.Collapse>
         </Container>

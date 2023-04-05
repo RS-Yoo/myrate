@@ -23,6 +23,7 @@
     "react-avatar": "^5.0.3",
     "react-bootstrap": "^2.7.2",
     "react-bootstrap-validation": "^0.1.11",
+    "react-collapsible": "^2.10.0",
     "react-dom": "^18.2.0",
     "react-edit-text": "^5.1.0",
     "react-horizontal-scrolling-menu": "^3.2.3",
