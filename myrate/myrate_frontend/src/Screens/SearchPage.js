@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import Navbar from "../Components/Navbar";
+import NavbarM from "../Components/Navbar";
 import { useLocation } from 'react-router-dom'
 import useAxiosLibraryBooks from "../Hooks/useAxiosLibraryBooks";
 import useAxiosGoogleBooks from "../Hooks/useAxiosGoogleBooks";
@@ -7,12 +7,19 @@ import useAxiosTMDBSearch from "../Hooks/useAxiosTMDBSearch";
 import "./SearchPage.css";
 import SearchBox from "../Components/SearchBox";
 import { useNavigate } from 'react-router-dom';
+import { MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem } from 'mdb-react-ui-kit';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 const SearchPage = () => {
 
   const [searchKey, setSearchKey] = useState("");
   const [pageNum, setPageNum] = useState(0);
-  const [mediaType, setMedia] = useState("movies");
+  const [mediaType, setMedia] = useState("Movies");
 
   const [bookDetails, setBookDetails] = useState("");
   const [calls, setCalls] = useState("");
@@ -61,10 +68,49 @@ const SearchPage = () => {
     navigate(`/secondary-tv-page/${tvshow['id']}`, { state: { tvDetails: { tvshow } } });
   }
 
+  async function findBook (inputKey, author, cover) {
+    setSearchKey(inputKey);
+    console.log("beresponse: " + responseb);
+    
+    secondfindbook(author, cover);     
+
+}
+function secondfindbook(author, cover) {
+  if(!loadingb)
+  {
+    console.log("amazon.com/dp/" + response.docs[0].isbn[0]);//JSON.stringify(response));
+      var image = cover;
+      var bookTitle = responseb.title;
+      var bookAuthor = author;
+      var publisher = response.publisher;
+      var description = ""; //responseb.description.value;
+      try {
+        description = responseb.description.value;
+      }
+      catch{
+        description = "No description available.";
+      }
+      var links = [];
+      try {
+        var amazonlink = "amazon.com/dp/" + response.docs[0].isbn[0];
+        links.push({name: "Amazon" , url: amazonlink});
+      }
+      catch {
+
+      }
+
+      const bookDetails = {book : {image: image, bookTitle: bookTitle, bookAuthor: bookAuthor, publisher: publisher, isbn_10: responseb.isbn_10, isbn_13: responseb.isbn_13, description: description, purchaseLinks: links}}
+      
+      console.log("details: " + JSON.stringify(bookDetails));
+      
+      navigate('/secondary-book-page', { state : {bookDetails}} );
+  }
+}
+
 
   // gets title/author for every book
   const renderSearchList = (res) => {
-    if (mediaType === "books") {
+    if (mediaType === "Books") {
       let loadBooks = []
       if (!loading && res) {
         res.docs.map(function (book) {
@@ -83,6 +129,7 @@ const SearchPage = () => {
                     <div class="flip-card-back">
                       <h3>{book.title}</h3>
                       <p>{book.author_name}</p>
+                      <button onClick={() => findBook(book.key, book.author_name, "https://covers.openlibrary.org/b/ID/" + book.cover_i + "-M.jpg")}>View Book</button>
                     </div>
                   </div>
                 </div>
@@ -99,13 +146,13 @@ const SearchPage = () => {
                   <tr>
                     <th>Results</th>
                   </tr>
-                  {DisplayTable(loadBooks, 4, 12)}
+                  {DisplayTable(loadBooks, 8, 32)}
                   <tr >
                   </tr>
                 </table>
                   <nav aria-label="...">
                     <ul class="pagination">
-                      {DisplayFooter(loadBooks.length, 4, 12)}
+                      {DisplayFooter(loadBooks.length, 8, 32)}
                     </ul>
                   </nav>
                 </>
@@ -116,7 +163,7 @@ const SearchPage = () => {
         }
       }
     }
-    else if (mediaType === "movies") {
+    else if (mediaType === "Movies") {
       let loadMovies = []
       if (!loadingm && responsem) {
         responsem.map(function (movie) {
@@ -144,13 +191,13 @@ const SearchPage = () => {
                   <tr>
                     <th>Results</th>
                   </tr>
-                  {DisplayTable(loadMovies, 4, 12)}
+                  {DisplayTable(loadMovies, 8, 32)}
                   <tr >
                   </tr>
                 </table>
                   <nav aria-label="...">
                     <ul class="pagination">
-                      {DisplayFooter(loadMovies.length, 4, 12)}
+                      {DisplayFooter(loadMovies.length, 8, 32)}
                     </ul>
                   </nav>
                 </>
@@ -162,7 +209,7 @@ const SearchPage = () => {
       }
 
     }
-    else if(mediaType === "tv")
+    else if(mediaType === "TV Shows")
     {
       let loadTV = []
       console.log(responset);
@@ -235,6 +282,11 @@ const SearchPage = () => {
               <td> {mediaList[j + 1]} </td>
               <td> {mediaList[j + 2]} </td>
               <td> {mediaList[j + 3]} </td>
+              <td> {mediaList[j + 4]} </td>
+              <td> {mediaList[j + 5]} </td>
+              <td> {mediaList[j + 6]} </td>
+              <td> {mediaList[j + 7]} </td>
+
             </>
           }
         </tr>
@@ -303,16 +355,52 @@ const SearchPage = () => {
     return result;
   }
 
+  function handleKeyDown (e) {
+    if (e.key === 'Enter') {
+      console.log('do validate');
+    }
+  }
+
+  function refreshMedia(e) {
+    setMedia(e);
+  }
+
+
+
   return (
     <>
-      <Navbar />
+      <NavbarM />
       <div>
-        <h5 class="SearchTitle"> Search Page</h5>
-        <button onClick={() => setMedia("books")}> Books </button>
-        <button onClick={() => setMedia("movies")}> Movies </button>
-        <button onClick={() => setMedia("tv")}> TV Shows </button>
-
-        {renderSearchList(response)}
+      
+      <Navbar variant="dark" bg="dark" expand="lg">
+        <Container fluid>
+          <Navbar.Toggle aria-controls="navbar-dark-example" />
+          <Navbar.Collapse id="navbar-dark-example">
+            <Nav className='pe-5'>
+              <NavDropdown
+                id="nav-dropdown-dark-example"
+                title={mediaType}
+                menuVariant="dark"
+              >
+                <NavDropdown.Item onClick={() => refreshMedia("Books")}>Books</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => refreshMedia("Movies")}>Movies</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => refreshMedia("TV Shows")}>TV Shows</NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+            <Form className="w-75 d-flex">
+            <Form.Control
+              type="search"
+              placeholder="Search"
+              className="me-2"
+              aria-label="Search"
+            />
+            <Button variant="outline-success">Search</Button>
+          </Form>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      {renderSearchList(response)}
+                                                                            
       </div>
     </>
   )

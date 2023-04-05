@@ -131,7 +131,7 @@ const SearchBox = (timeFrame, count) => {
                 let length = resm.length;
                 if(length > 5)
                     length = 5;
-                console.log(rest.length);
+                //console.log(rest.length);
                // for (let i = 0; i < length; i++)
                 {
                   //  console.log(i);
