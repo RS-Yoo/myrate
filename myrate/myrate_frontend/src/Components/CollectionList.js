@@ -133,6 +133,7 @@ const CollectionList = () => {
                     <animated.div
                     className="collection--card"
                     id={c._id}
+                    key={c._id}
                     onClick={handleClickCollection}
                     style={{
                         ...style,

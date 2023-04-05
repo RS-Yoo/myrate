@@ -75,11 +75,11 @@ function CollectionItems(props) {
         //TODO: Need to update this to display correctly for books, movies, and tv shows
         //rn, only goes to book secondary page
         <>
-            <h4 className="myCollectionsHeader">{props.title}</h4>
+            <h4 className="myCollectionsHeader items__animation">{props.title}</h4>
             <div class="scroll__wrap">
                 {
                     Object.entries(props.items).map(([key, value]) => (
-                        <Items k={key} v={value} />
+                        <Items key={key} k={key} v={value} />
                     ))
                 }
             </div>

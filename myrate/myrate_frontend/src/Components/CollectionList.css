@@ -75,9 +75,25 @@ box-shadow: inset 0 0 0 2000px rgba(0, 21, 74, 0.5);
   background-color: rgba(255, 175, 113, 0.8);
   color: #fff;
   padding: 10px 30px;
+  margin: 0 0 30px 30px;
   text-align: center;
   border-color: transparent;
 }
+
+.items__animation {
+    animation: modal-show 0.3s;
+}
+
+@keyframes modal-show {
+    from {
+      opacity: 0;
+      margin-top: -50px;
+    }
+    to {
+      opacity: 1;
+      margin-top: 0;
+    }
+  }
 
 
 
