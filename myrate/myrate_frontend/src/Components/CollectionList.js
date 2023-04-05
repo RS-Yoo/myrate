@@ -28,6 +28,7 @@ const CollectionList = () => {
     const userProfile = useSelector((state) => { return state.userProfile; });
 
     let [collections, setCollections] = useState([]);
+    let [imgList, setImgList] = useState();
     let [items, setItems] = useState();
     let [selectedItems, setSelectedItems] = useState();
     let [selectedId, setSelectedId] = useState();
@@ -81,6 +82,29 @@ const CollectionList = () => {
     }, [userProfile]);
 
     // TODO: Display the first item in each collection as the cover
+    useEffect(() => {
+        imgList = [];
+        collections.map(c => {
+            // choose book as the cover
+            if (c.book_list.length > 0) {
+                imgList.push("url("+c.book_list[0].image+")");
+            }
+            // or movie
+            else if (c.movie_list.length > 0) {
+                imgList.push("url("+prePosterPath+c.movie_list[0].poster_path+")");
+            }
+            // or tvshow
+            else if (c.tvshow_list.length > 0) {
+                imgList.push("url("+prePosterPath+c.tvshow_list[0].poster_path+")");
+            }
+            // None if empty
+            else {
+                imgList.push("#000");
+            }
+        })
+        setImgList(imgList);
+        console.log("imgList", imgList);
+    }, [collections])
     if(userProfile.username === null) {
         return (
             <LoginForm />
@@ -105,13 +129,14 @@ const CollectionList = () => {
         <div class="wrap">
             <div className="list--container" {...bind()}>
                 {  
-                    collections.map(c => (
+                    collections.map((c, i) => (
                     <animated.div
                     className="card"
                     id={c._id}
                     onClick={handleClickCollection}
                     style={{
                         ...style,
+                        background: `${imgList[i]}`,
                     }}
                     >
                     <h3 className="card__title">
