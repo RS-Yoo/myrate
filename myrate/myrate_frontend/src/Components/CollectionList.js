@@ -131,7 +131,7 @@ const CollectionList = () => {
                 {  
                     collections.map((c, i) => (
                     <animated.div
-                    className="card"
+                    className="collection--card"
                     id={c._id}
                     onClick={handleClickCollection}
                     style={{
@@ -139,10 +139,10 @@ const CollectionList = () => {
                         background: `${imgList[i]}`,
                     }}
                     >
-                    <h3 className="card__title">
+                    <h3 className="collection--card__title">
                         {c.title}
                         </h3>
-                    <div className="card__description">
+                    <div className="collection--card__description">
                         {c.description}
                     </div>
                     </animated.div>
