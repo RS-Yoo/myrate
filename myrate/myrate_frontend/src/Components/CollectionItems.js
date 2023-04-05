@@ -83,7 +83,7 @@ function CollectionItems(props) {
                     ))
                 }
             </div>
-            <button class="btn btn-primary" onClick={openModal}>Delete Collection</button>
+            <button class="collection--button" onClick={openModal}>Delete Collection</button>
             <DeleteCollectionModal id={props.id} open={modalOpen} close={closeModal} header="Delete Collection"></DeleteCollectionModal>
         </>
     );

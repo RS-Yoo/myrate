@@ -149,7 +149,7 @@ const CollectionList = () => {
                 ))}
             </div>
             </div>
-            <button class="btn btn-primary" onClick={openModal}>Add a collection</button>
+            <button class="collection--button" onClick={openModal}>Add a collection</button>
             <AddCollectionModal open={modalOpen} close={closeModal} header="New Collection"></AddCollectionModal>
             {selectedItems && <CollectionItems id={selectedId} title={title} items={selectedItems} />}
         </>
