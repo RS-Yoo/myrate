@@ -5,7 +5,6 @@ import useAxiosLibraryBooks from "../Hooks/useAxiosLibraryBooks";
 import useAxiosGoogleBooks from "../Hooks/useAxiosGoogleBooks";
 import useAxiosTMDBSearch from "../Hooks/useAxiosTMDBSearch";
 import "./SearchPage.css";
-import SearchBox from "../Components/SearchBox";
 import { useNavigate } from 'react-router-dom';
 import { MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem } from 'mdb-react-ui-kit';
 import Container from 'react-bootstrap/Container';
@@ -14,8 +13,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { func } from "prop-types";
-
+import SearchIcon from '@mui/icons-material/Search';
 const SearchPage = () => {
 
   const [searchKey, setSearchKey] = useState("");
@@ -392,7 +390,8 @@ function secondfindbook(author, cover) {
               className="me-2"
               onKeyUp={(e) => handleChange(e)}
             />
-            <Button variant="outline-success" onClick={(e) => setSearchEntry(document.getElementById("searchInput").value)}>Search</Button>
+            <Button variant="outline-primary" onClick={(e) => setSearchEntry(document.getElementById("searchInput").value)}>Search</Button>
+            <SearchIcon onClick={(e) => setSearchEntry(document.getElementById("searchInput").value)} />
           </Form>
           </Navbar.Collapse>
         </Container>
