@@ -24,8 +24,8 @@ const SearchPage = () => {
   const [calls, setCalls] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const [searchEntry, setSearchEntry] = useState(location.state.searchEntry);
-  console.log("search entry: " + JSON.stringify(location.state.searchEntry));
+  const [searchEntry, setSearchEntry] = useState(location.state?.searchEntry || "");
+  //console.log("search entry: " + JSON.stringify(location.state.searchEntry));
   // Base URL that needs to be pre-pended to 'poster_path'
   const prePosterPath = "https://image.tmdb.org/t/p/original";
 
@@ -329,7 +329,7 @@ function secondfindbook(author, cover) {
     );
     result.push(
       <li class="page-item ">
-        <span class="page-link" onClick={() => setPageNum(Math.round(numPagesDis - 1))}>
+        <span class="page-link" onClick={() => setPageNum(Math.round(numPagesDis-1))}>
           {Math.round(numPagesDis)}
         </span>
       </li>
@@ -354,6 +354,7 @@ function secondfindbook(author, cover) {
   }
 
   function refreshMedia(e) {
+    setPageNum(0);
     setMedia(e);
   }
 
