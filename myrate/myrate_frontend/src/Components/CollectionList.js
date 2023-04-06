@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { animated, useSpring } from "react-spring";
+import { useScroll } from "react-use-gesture";
 import { useSelector } from 'react-redux';
 import ScrollMenu from 'react-horizontal-scrolling-menu'
 import axios from 'axios';
@@ -9,9 +11,24 @@ import AddCollectionModal from "./Modals/AddCollectionModal";
 
 const CollectionList = () => {
 
+    const prePosterPath = "https://image.tmdb.org/t/p/original";
+
+    const [style, set] = useSpring(() => ({
+        transform: "perspective(500px) rotateY(0deg)"
+      }));
+
+    const bind = useScroll(event => {
+        set({
+            transform: `perspective(500px) rotateY(${
+                event.scrolling ? event.delta[0] : 0
+            }deg)`
+        });
+    });
+
     const userProfile = useSelector((state) => { return state.userProfile; });
 
     let [collections, setCollections] = useState([]);
+    let [imgList, setImgList] = useState();
     let [items, setItems] = useState();
     let [selectedItems, setSelectedItems] = useState();
     let [selectedId, setSelectedId] = useState();
@@ -65,6 +82,29 @@ const CollectionList = () => {
     }, [userProfile]);
 
     // TODO: Display the first item in each collection as the cover
+    useEffect(() => {
+        imgList = [];
+        collections.map(c => {
+            // choose book as the cover
+            if (c.book_list.length > 0) {
+                imgList.push("url("+c.book_list[0].image+")");
+            }
+            // or movie
+            else if (c.movie_list.length > 0) {
+                imgList.push("url("+prePosterPath+c.movie_list[0].poster_path+")");
+            }
+            // or tvshow
+            else if (c.tvshow_list.length > 0) {
+                imgList.push("url("+prePosterPath+c.tvshow_list[0].poster_path+")");
+            }
+            // None if empty
+            else {
+                imgList.push("#000");
+            }
+        })
+        setImgList(imgList);
+        console.log("imgList", imgList);
+    }, [collections])
     if(userProfile.username === null) {
         return (
             <LoginForm />
@@ -87,15 +127,30 @@ const CollectionList = () => {
     return (
         <>
         <div class="wrap">
-            <div class="scroll__wrap">
-                {collections.map(c => (
-                    <button class="scroll--element" id={c._id} onClick={handleClickCollection}>
+            <div className="list--container" {...bind()}>
+                {  
+                    collections.map((c, i) => (
+                    <animated.div
+                    className="collection--card"
+                    id={c._id}
+                    key={c._id}
+                    onClick={handleClickCollection}
+                    style={{
+                        ...style,
+                        background: `${imgList[i]}`,
+                    }}
+                    >
+                    <h3 className="collection--card__title">
                         {c.title}
-                    </button>
+                        </h3>
+                    <div className="collection--card__description">
+                        {c.description}
+                    </div>
+                    </animated.div>
                 ))}
             </div>
             </div>
-            <button class="btn btn-primary" onClick={openModal}>Add a collection</button>
+            <button class="collection--button" onClick={openModal}>Add a collection</button>
             <AddCollectionModal open={modalOpen} close={closeModal} header="New Collection"></AddCollectionModal>
             {selectedItems && <CollectionItems id={selectedId} title={title} items={selectedItems} />}
         </>

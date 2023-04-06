@@ -7,6 +7,7 @@ import collection3 from '../img/collection3.jpeg'
 import collection4 from '../img/collection4.jpg'
 import { useSelector } from 'react-redux';
 import CollectionList from "../Components/CollectionList";
+import "./CollectionList.css";
 import LoginForm from "../Components/LoginForm";
 import { EditText, EditTextarea } from 'react-edit-text';
 import 'react-edit-text/dist/index.css';
@@ -105,7 +106,6 @@ useEffect(() => {
                 </div>
                 <MDBRow className="d-flex justify-content-center align-items-center">
                   <CollectionList />
-
                 </MDBRow>
 
                 <div className="d-flex justify-content-between align-items-center mb-4">
