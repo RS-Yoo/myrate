@@ -14,6 +14,7 @@ const SecondaryTV = () => {
     const [rate, setRate] = useState();
     const [review, setReview] = useState();
     const [mediaId, setMediaId] = useState();
+    const [apiId, setApiId] = useState();
     const [reviewId, setReviewId] = useState();
     const [modalOpen, setModalOpen] = useState(false); 
 
@@ -53,9 +54,11 @@ const SecondaryTV = () => {
         }).then((response) => {
           console.log(response.data);
           const tvshow = ((response.data));
+          // save tvshow to the database
           if (!tvshow) {
             console.log(`TV Show with name ${JSON.stringify(newTVShow.name)} and air date ${JSON.stringify(newTVShow.first_air_date)} not found`);
             console.log("adding TV Show");
+            setApiId(tvDetails['tv'].id);
             fetch("http://localhost:5000/tvshow/add", {
               method: "POST",
                    headers: {
@@ -102,7 +105,9 @@ const SecondaryTV = () => {
           {
             console.log(`TV Show with name ${JSON.stringify(newTVShow.name)} aired on ${JSON.stringify(newTVShow.first_air_date)} with id ${JSON.stringify(tvshow._id)} was found`);
             dbTVId = tvshow._id;
+
             setMediaId(dbTVId);
+            setApiId(tvshow.api_id);
             axios.get(`http://localhost:5000/rating/findrating/${userProfile.username}`, {
                     params: {
                         media_type: "tvshow",
@@ -170,7 +175,7 @@ const SecondaryTV = () => {
             </div>
 
             <ReviewForm title={name} currRate={rate?rate:''} currReview={review?review:''} media={newTVShow} mediaId={mediaId} mediaType={"tvshow"} reviewId={reviewId} />
-            {/* <RelatedTitlesSliderList apiId={apiId} isMovie={false} /> */}
+            <RelatedTitlesSliderList apiId={apiId} isMovie={false} />
             <ReviewList mediaId={mediaId}></ReviewList>
         </>
     );
