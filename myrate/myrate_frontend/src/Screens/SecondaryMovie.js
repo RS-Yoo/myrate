@@ -9,7 +9,7 @@ import ReviewForm from "../Components/ReviewForm";
 import CollectionModal from "../Components/Modals/CollectionModal";
 import ReviewList from "../Components/ReviewList";
 
-const SecondaryMovie = () => {
+const SecondaryMovie = (props) => {
 
     const [rate, setRate] = useState();
     const [review, setReview] = useState();
@@ -23,7 +23,6 @@ const SecondaryMovie = () => {
     const location = useLocation();
     const { movieDetails } = location.state;
     const { title, overview, poster_path, release_date, _id } = movieDetails['movie'];
-  
 
     const newMovie = {
         title: title,
@@ -132,7 +131,7 @@ const SecondaryMovie = () => {
         .catch((response) => {
             console.log("error with axios: " + response);
         });
-      }, [userProfile]);
+      }, [userProfile, movieDetails['movie'].id]);
 
 
 
