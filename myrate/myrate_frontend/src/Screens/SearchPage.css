@@ -9,12 +9,12 @@
 
   table {
     align-self: center;
-    border: 2px solid rgb(0, 0, 0);
+    
    
   }
   
   th {
-  border-bottom: 1px solid black;
+    font-size: xx-large;
   }
 
   tfoot {
@@ -71,4 +71,43 @@
     background-color: #bbb;
     color: white;
     transform: rotateY(180deg);
+  }
+  .white {
+    background-color: #FFF!important;
+  }
+  
+  .blue-grey {
+    background-color: #ECEFF1!important;
+  }
+  
+  .light-blue {
+    background-color: #E3F2FD!important;
+  }
+  
+  .deep-purple {
+    background-color: #EDE7F6!important;
+  }
+  
+  .grey {
+    background-color: #EEEEEE!important;
+  }
+  
+  .dark {
+    background-color: #212121!important;
+  }
+  
+  .blue-grey-dark {
+    background-color: #37474F!important;
+  }
+  
+  .teal-dark {
+    background-color: #004D40!important;
+  }
+  
+  .deep-purple-dark {
+    background-color: #4527A0!important;
+  }
+  
+  .grey-dark {
+    background-color: #424242!important;
   }

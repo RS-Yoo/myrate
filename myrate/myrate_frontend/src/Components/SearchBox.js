@@ -29,6 +29,19 @@ const SearchBox = (timeFrame, count) => {
             setShowDrop(true);
     };
 
+    const keyDown = (e) => {
+        if(e.key === "Enter")
+        {
+            console.log("in enter!!!!!!!!!!!!!!!" + searchEntry);
+            navi();
+        }
+    };
+
+    const navi = () => {
+        setShowDrop(false);
+        navigate('/search-page', { state : {searchEntry} } );
+    }
+
     const { responsem, loadingm, errorm } = useAxiosTMDBSearch({
         method: 'get',
         url: `search/movie`,
@@ -131,7 +144,7 @@ const SearchBox = (timeFrame, count) => {
                 let length = resm.length;
                 if(length > 5)
                     length = 5;
-                console.log(rest.length);
+                //console.log(rest.length);
                // for (let i = 0; i < length; i++)
                 {
                   //  console.log(i);
@@ -195,7 +208,7 @@ const SearchBox = (timeFrame, count) => {
                 <div class="row ">
                     <div class="col-md-8">
                         <div class="form-outline">
-                            <input type="text" placeholder="Search Media" value={searchEntry} onChange={changed} id="searchBox" class="form-control" />
+                            <input type="text" placeholder="Search Media" value={searchEntry} onKeyDown={keyDown} onChange={changed} id="searchBox" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -204,7 +217,7 @@ const SearchBox = (timeFrame, count) => {
                     <div>
                         <Dropdown.Menu show = {showDrop? true : false}>
                             {renderSliderList(response, responsem, responset)}
-                            <Dropdown.Item onClick={() => navigate('/search-page', { state : {searchEntry} } )} className="dropdownlink" >
+                            <Dropdown.Item onClick={() => navi} className="dropdownlink" >
                                 View More Results
                             </Dropdown.Item>
                         </Dropdown.Menu>
