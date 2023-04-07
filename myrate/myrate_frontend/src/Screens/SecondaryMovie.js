@@ -9,11 +9,12 @@ import ReviewForm from "../Components/ReviewForm";
 import CollectionModal from "../Components/Modals/CollectionModal";
 import ReviewList from "../Components/ReviewList";
 
-const SecondaryMovie = () => {
+const SecondaryMovie = (props) => {
 
     const [rate, setRate] = useState();
     const [review, setReview] = useState();
     const [mediaId, setMediaId] = useState();
+    const [apiId, setApiId] = useState();
     const [reviewId, setReviewId] = useState();
     const [modalOpen, setModalOpen] = useState(false); 
 
@@ -22,7 +23,6 @@ const SecondaryMovie = () => {
     const location = useLocation();
     const { movieDetails } = location.state;
     const { title, overview, poster_path, release_date, _id } = movieDetails['movie'];
-  
 
     const newMovie = {
         title: title,
@@ -53,9 +53,11 @@ const SecondaryMovie = () => {
             },
         }).then((response) => {
           const movie = ((response.data));
+          // save movie to the database
           if (!movie) {
             console.log(`Movie with title ${JSON.stringify(newMovie.title)} and release date ${JSON.stringify(newMovie.release_date)} not found`);
             console.log("adding movie");
+            setApiId(movieDetails['movie'].id);
             fetch("http://localhost:5000/movie/add", {
                 method: "POST",
                 headers: {
@@ -105,6 +107,7 @@ const SecondaryMovie = () => {
             dbMovieId = movie._id;
             
             setMediaId(movie._id);
+            setApiId(movie.api_id);
 
             axios.get(`http://localhost:5000/rating/findrating/${userProfile.username}`, {
                 params: {
@@ -128,7 +131,7 @@ const SecondaryMovie = () => {
         .catch((response) => {
             console.log("error with axios: " + response);
         });
-      }, [userProfile]);
+      }, [userProfile, movieDetails['movie'].id]);
 
 
 
@@ -173,7 +176,7 @@ const SecondaryMovie = () => {
                 <hr class="solid" />
             </div>
             <ReviewForm title={title} currRate={rate?rate:''} currReview={review?review:''} media={newMovie} mediaId={mediaId} mediaType={"movie"} reviewId={reviewId}  />
-            {/* <RelatedTitlesSliderList apiId={apiId} isMovie={true} /> */}
+            <RelatedTitlesSliderList apiId={apiId} isMovie={true} />
 
 
             <ReviewList mediaId={mediaId}></ReviewList>
