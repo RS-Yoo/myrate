@@ -9,7 +9,7 @@ import ReviewForm from "../Components/ReviewForm";
 import CollectionModal from "../Components/Modals/CollectionModal"
 import ReviewList from "../Components/ReviewList";
 
-const SecondaryTV = () => {
+const SecondaryTV = (props) => {
 
     const [rate, setRate] = useState();
     const [review, setReview] = useState();
@@ -58,7 +58,7 @@ const SecondaryTV = () => {
           if (!tvshow) {
             console.log(`TV Show with name ${JSON.stringify(newTVShow.name)} and air date ${JSON.stringify(newTVShow.first_air_date)} not found`);
             console.log("adding TV Show");
-            setApiId(tvDetails['tv'].id);
+            setApiId(tvDetails['tvshow'].id);
             fetch("http://localhost:5000/tvshow/add", {
               method: "POST",
                    headers: {
@@ -130,7 +130,7 @@ const SecondaryTV = () => {
         .catch((response) => {
             console.log("error with axios: " + response);
         });
-      }, [userProfile]);
+      }, [userProfile, tvDetails['tvshow'].id]);
 
     // Base URL that needs to be pre-pended to 'poster_path'
     const prePosterPath = "https://image.tmdb.org/t/p/original";
