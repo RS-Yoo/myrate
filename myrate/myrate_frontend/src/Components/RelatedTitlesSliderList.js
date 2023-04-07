@@ -4,6 +4,7 @@ import "./RelatedTitlesSliderList.css";
 import useAxiosTMDB from "../Hooks/useAxiosTMDB";
 
 const RelatedTitlesSliderList = (props) => {
+    
     const path = props.apiId;
     // Base URL that needs to be pre-pended to 'poster_path'
     const prePosterPath = "https://image.tmdb.org/t/p/original";
@@ -17,7 +18,8 @@ const RelatedTitlesSliderList = (props) => {
         method: 'get',
         url: `movie/${path}/similar`,
         sortByPopularity: true,
-    });
+    }, [props.apiId]);
+
     const renderMovieSliderList = (trendingObj) => {
         if (!loading) {
             return (
@@ -65,6 +67,17 @@ const RelatedTitlesSliderList = (props) => {
         }
     };
 
+    if (!props.apiId || !response) {
+        return (
+            <>
+            <div className="relatedTitlesSliderListDiv">
+                <h5>Related Titles</h5>
+            </div>
+            </>
+        );
+    }
+    else {
+
     return (
         <>
             <div className="relatedTitlesSliderListDiv">
@@ -73,6 +86,7 @@ const RelatedTitlesSliderList = (props) => {
             </div>
         </>
     );
+    }
 };
 
 export default RelatedTitlesSliderList;
