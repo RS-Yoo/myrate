@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { ResponsiveBar } from '@nivo/bar'
 import { ResponsivePie } from '@nivo/pie'
+import Table from 'react-bootstrap/Table';
 
 const MyStats = () => {
     let [BookStat, setBookStat] = useState(0);
@@ -216,23 +217,48 @@ const MyStats = () => {
 
 
     return (
-        <><dl>
+        <><Table striped bordered hover size="sm">
+        <thead>
+        <tr>
+          <th>Media Type</th>
+          <th>#</th>
+          <th>Total Time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Book</td>
+          <td>{BookStat}</td>
+          <td>{BookStat * 600} mins!</td>
+        </tr>
+        <tr>
+          <td>Movies</td>
+          <td>{MovieStat}</td>
+          <td>{MovieStat * 110} mins!</td>
+        </tr>
+        <tr>
+          <td>TV Shows</td>
+          <td>{TVStat}</td>
+          <td>{TVStat * 16 * 40} mins!</td>
+        </tr>
+      </tbody>
+        </Table><><dl>
             <dt><strong>Books</strong></dt>
-                <dd><li><i>Amount of Books Read: {BookStat}</i></li></dd>
-                <dd><li><i>Time Spent Reading: {BookStat * 600} mins!</i></li></dd>
+            <dd><li><i>Amount of Books Read: {BookStat}</i></li></dd>
+            <dd><li><i>Time Spent Reading: {BookStat * 600} mins!</i></li></dd>
             <dt><strong>Movies</strong></dt>
-                <dd><li><i>Amount of Movies Watched: {MovieStat}</i></li></dd>
-                <dd><li><i>Time Spent Watching Movies: {MovieStat * 110} mins!</i></li></dd>
+            <dd><li><i>Amount of Movies Watched: {MovieStat}</i></li></dd>
+            <dd><li><i>Time Spent Watching Movies: {MovieStat * 110} mins!</i></li></dd>
             <dt><strong>TV Shows</strong></dt>
-                <dd><li><i>Amount of TV Shows Watched: {TVStat}</i></li></dd>
-                <dd><li><i>Time Spent Watching TV Shows: {TVStat * 16 * 40} mins!</i></li></dd>
+            <dd><li><i>Amount of TV Shows Watched: {TVStat}</i></li></dd>
+            <dd><li><i>Time Spent Watching TV Shows: {TVStat * 16 * 40} mins!</i></li></dd>
         </dl>
-        <div style={{ height: 400, width: '70%', display: 'inline-flex' }}>
-        {MyResponsiveBar()}
-      </div>
-      <div style={{ height: 400, width: '30%', display: 'inline-flex' }}>
-        {Pie()}
-      </div></>
+                <div style={{ height: 400, width: '70%', display: 'inline-flex' }}>
+                    {MyResponsiveBar()}
+                </div>
+                <div style={{ height: 400, width: '30%', display: 'inline-flex' }}>
+                    {Pie()}
+                </div></></>
 
     )
 }
