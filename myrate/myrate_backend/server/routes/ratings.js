@@ -99,12 +99,14 @@ ratingRoutes.route("/rating/findstatrating").get(function (req, res) {
 // This section will help you create a new rating.
 ratingRoutes.route("/rating/add").post(function (req, response) {
  let db_connect = dbo.getDb();
+ let day = new Date();
  let myobj = {
     stars: req.body.stars,
     review: req.body.review,
     media_type: req.body.media_type,
     media_id: ObjectId(req.body.media_id),
     user_username: req.body.user,
+    timestamp_day: day,
  };
  console.log(myobj);
  db_connect.collection("ratings").insertOne(myobj, function (err, res) {
@@ -117,6 +119,7 @@ ratingRoutes.route("/rating/add").post(function (req, response) {
 ratingRoutes.route("/rating/update/:id").post(function (req, response) {
  let db_connect = dbo.getDb();
  let myquery = { _id: ObjectId(req.params.id) };
+ let day = new Date();
  let newvalues = {
    $set: {
     stars: req.body.stars,
@@ -124,6 +127,7 @@ ratingRoutes.route("/rating/update/:id").post(function (req, response) {
     media_type: req.body.media_type,
     media_id: ObjectId(req.body.media_id),
     user_username: req.body.user,
+    timestamp_day: day,
    },
  };
  db_connect

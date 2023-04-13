@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+// Imports for charts
 import { ResponsiveBar } from '@nivo/bar'
 import { ResponsivePie } from '@nivo/pie'
-import Table from 'react-bootstrap/Table';
+
+// Imports for goal box
+import { ProSidebarProvider, Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
+import Tooltip from '@mui/material/Tooltip';
+import Popper from '@mui/material/Popper';
+import NewGoalForm from './NewGoalForm';
+import GoalPopUp from './GoalPopUp';
+import ProgressBar from 'react-bootstrap/ProgressBar';
+
+
+
 
 const MyStats = () => {
+  
     let [BookStat, setBookStat] = useState(0);
     let [MovieStat, setMovieStat] = useState(0);
     let [TVStat, setTVStat] = useState(0);
@@ -77,6 +89,7 @@ const MyStats = () => {
             let ratingDate = new Date(d["timestamp_day"]);
             if (d["media_type"] === "books") {
               bs++;
+              console.log("year for book: " + ratingDate.getFullYear());
               if(ratingDate.getFullYear() === lastYear)
               {
                 byr++;
@@ -132,6 +145,30 @@ const MyStats = () => {
         });
   
     }, [userProfile]);
+
+    useEffect(() => {
+      axios.get(`http://localhost:5000/goal/findstatgoal`, {
+        params: {
+          username: userProfile.username
+        },
+      })
+        .then(function (response) {
+          response.data.map(d => {
+            if (d["daymonthyear"] === "Yearly") {
+              yearlyGoals.push(d);
+            } else if (d["daymonthyear"] === "Monthly") {
+              monthlyGoals.push(d);
+            } else {
+              dailyGoals.push(d);
+            }
+          });
+          setYearly(yearlyGoals);
+          setMonthly(monthlyGoals);
+          setDaily(dailyGoals);
+  
+        });
+    }, [userProfile]);
+  
 
     const data = [
       {
@@ -214,51 +251,242 @@ const MyStats = () => {
     />
   )
 
+  function editGoal(goal) {
+    // set GoalName, MediaType, TimeGoal, Positive, Amount of state
+    console.log("In edit rating");  
+    return (
+      <Popper position="left center" >
+        <div>
+          <NewGoalForm state={{ goalDetails: { goal } }} />
+        </div>
+      </Popper>
+    );
+  }
+  function deleteGoal(id) {
+    axios.delete(`http://localhost:5000/goal/delete/${id}`)
+    .then(function(response) {
+        window.location.reload(false);
+    })    
+  }
+
+  function returnDailyGoals(goals) {
+    console.log(JSON.stringify(goals));
+    try {
+      let goalSats = [];
+      goals.map(function (g) {
+        let varColor = "success";
+        let nowNum = 0;
+        let ttstr = "";
+        if (g.measurement === "MCount") {
+          if (g.mediaType === "Books")
+          {
+            nowNum = dailyBookRatings / g.amount;
+            ttstr = "Read " + dailyBookRatings + " books out of " + g.amount;
+          }
+          else if (g.mediaType === "Movies")
+          {
+            nowNum = dailyMovieRatings / g.amount;
+            ttstr = "Watched " + dailyMovieRatings + " movies out of " + g.amount;
+          }
+          else
+          {
+            nowNum = dailyTVRatings / g.amount;
+            ttstr = "Watched " + dailyTVRatings + " shows out of " + g.amount;
+          }
+          nowNum *= 100;
+          if (nowNum < 33)
+            varColor = "danger"
+          else if (nowNum < 66)
+            varColor = "warning"
+          goalSats.push(<>
+            <p style={{backgroundColor: "lightcyan"}}>{g.goalTitle} ( {g.mediaType} )</p>
+            <Tooltip title={ttstr} arrow>
+              <ProgressBar striped animated variant={varColor} now={nowNum} />
+            </Tooltip>
+            <div style={{ display: "flex", flexDirection: "row-reverse", height: '100%' }}>
+              <p style={{color: 'blue', cursor: "pointer"}} onClick={() => deleteGoal(g._id)}>Delete &nbsp;</p> 
+              <p>&nbsp;|&nbsp;</p>
+              <Popper trigger={<p style={{color: 'blue', cursor: "pointer"} }> Edit </p>} position="left center" >
+                <div>
+                  <NewGoalForm state={{ goalDetails: { g } }}/>
+                </div>
+              </Popper>
+            </div>
+          </>
+          );
+        }
+      });
+
+      return (
+        <div>
+          {goalSats}
+        </div>
+      )
+    }
+    catch {
+
+    }
+  }
+
+  function returnMonthlyGoals(goals) {
+    console.log(JSON.stringify(goals));
+    try {
+      let goalSats = [];
+      goals.map(function (g) {
+        let varColor = "success";
+        let nowNum = 0;
+        let ttstr = "";
+        if (g.measurement === "MCount") {
+          if (g.mediaType === "Books")
+          {
+            nowNum = monthlyBookRatings / g.amount;
+            ttstr = "Read " + monthlyBookRatings + " books out of " + g.amount;
+          }
+          else if (g.mediaType === "Movies")
+          {
+            nowNum = monthlyMovieRatings / g.amount;
+            ttstr = "Watched " + monthlyMovieRatings + " movies out of " + g.amount;
+          }
+          else
+          {
+            nowNum = monthlyTVRatings / g.amount;
+            ttstr = "Watched " + monthlyTVRatings + " shows out of " + g.amount;
+          }
+          nowNum *= 100;
+          if (nowNum < 33)
+            varColor = "danger"
+          else if (nowNum < 66)
+            varColor = "warning"
+          goalSats.push(<>
+            <p style={{backgroundColor: "lightcyan"}}>{g.goalTitle} ( {g.mediaType} )</p>
+            <Tooltip title={ttstr}>
+              <ProgressBar striped animated variant={varColor} now={nowNum} />
+            </Tooltip>
+            <div style={{ display: "flex", flexDirection: "row-reverse", height: '100%' }}>
+              <p style={{color: 'blue', cursor: "pointer"}} onClick={() => deleteGoal(g._id)}>Delete &nbsp;</p> 
+              <p>&nbsp;|&nbsp;</p>
+              <Popper trigger={<p style={{color: 'blue', cursor: "pointer"} }> Edit </p>} position="left center" >
+                <div>
+                  <NewGoalForm state={{ goalDetails: { g } }}/>
+                </div>
+              </Popper>
+            </div>
+          </>);
+        }
+      });
+
+      return (
+        <div>
+          {goalSats}
+        </div>
+      )
+    }
+    catch {
+
+    }
+  }
+
+  function returnYearlyGoals(goals) {
+    console.log(JSON.stringify(goals));
+    try {
+      let goalSats = [];
+      goals.map(function (g) {
+        let varColor = "success";
+        let nowNum = 0;
+        let ttstr = "";
+        if (g.measurement === "MCount") {
+          if (g.mediaType === "Books")
+          {
+            nowNum = yearlyBookRatings / g.amount;
+            ttstr = "Read " + yearlyBookRatings + " books out of " + g.amount;
+          }
+          else if (g.mediaType === "Movies")
+          {
+            nowNum = yearlyMovieRatings / g.amount;
+            ttstr = "Watched " + yearlyMovieRatings + " movies out of " + g.amount;
+          }
+          else
+          {
+            nowNum = yearlyTVRatings / g.amount;
+            ttstr = "Watched " + yearlyTVRatings + " shows out of " + g.amount;
+          }
+          nowNum *= 100;
+          if (nowNum < 33)
+            varColor = "danger"
+          else if (nowNum < 66)
+            varColor = "warning"
+          goalSats.push(<>
+            <p style={{backgroundColor: "lightcyan"}}>{g.goalTitle} ( {g.mediaType} )</p>
+            <Tooltip title={ttstr}>
+              <ProgressBar striped animated variant={varColor} now={nowNum} />
+            </Tooltip>
+            <div style={{ display: "flex", flexDirection: "row-reverse", height: '100%' }}>
+              <p style={{color: 'blue', cursor: "pointer"}} onClick={() => deleteGoal(g._id)}>Delete &nbsp;</p> 
+              <p>&nbsp;|&nbsp;</p>
+              <Popper trigger={<p style={{color: 'blue', cursor: "pointer"} }> Edit </p>} position="left center" >
+                <div>
+                  <NewGoalForm state={{ goalDetails: { g } }}/>
+                </div>
+              </Popper>
+            </div>
+          </>);
+        }
+      });
+
+      return (
+        <div>
+          {goalSats}
+        </div>
+      )
+    }
+    catch {
+
+    }
+  }
 
 
     return (
-        <><Table striped bordered hover size="sm">
-        <thead>
-        <tr>
-          <th>Media Type</th>
-          <th>#</th>
-          <th>Total Time</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>Book</td>
-          <td>{BookStat}</td>
-          <td>{BookStat * 600} mins!</td>
-        </tr>
-        <tr>
-          <td>Movies</td>
-          <td>{MovieStat}</td>
-          <td>{MovieStat * 110} mins!</td>
-        </tr>
-        <tr>
-          <td>TV Shows</td>
-          <td>{TVStat}</td>
-          <td>{TVStat * 16 * 40} mins!</td>
-        </tr>
-      </tbody>
-        </Table><><dl>
-            <dt><strong>Books</strong></dt>
-            <dd><li><i>Amount of Books Read: {BookStat}</i></li></dd>
-            <dd><li><i>Time Spent Reading: {BookStat * 600} mins!</i></li></dd>
-            <dt><strong>Movies</strong></dt>
-            <dd><li><i>Amount of Movies Watched: {MovieStat}</i></li></dd>
-            <dd><li><i>Time Spent Watching Movies: {MovieStat * 110} mins!</i></li></dd>
-            <dt><strong>TV Shows</strong></dt>
-            <dd><li><i>Amount of TV Shows Watched: {TVStat}</i></li></dd>
-            <dd><li><i>Time Spent Watching TV Shows: {TVStat * 16 * 40} mins!</i></li></dd>
+        <>
+        <div style={{ display: 'flex', width: '100%', height: '100%' }}>
+        <dl style={{ width: '80%' }}>
+          <dt><strong>Books</strong></dt>
+          <dd><li><i>Amount of Books Read: {BookStat}</i></li></dd>
+          <dd><li><i>Time Spent Reading: {BookStat * 600} mins!</i></li></dd>
+          <dt><strong>Movies</strong></dt>
+          <dd><li><i>Amount of Movies Watched: {MovieStat}</i></li></dd>
+          <dd><li><i>Time Spent Watching Movies: {MovieStat * 110} mins!</i></li></dd>
+          <dt><strong>TV Shows</strong></dt>
+          <dd><li><i>Amount of TV Shows Watched: {TVStat}</i></li></dd>
+          <dd><li><i>Time Spent Watching TV Shows: {TVStat * 16 * 40} mins!</i></li></dd>
         </dl>
-                <div style={{ height: 400, width: '70%', display: 'inline-flex' }}>
-                    {MyResponsiveBar()}
-                </div>
-                <div style={{ height: 400, width: '30%', display: 'inline-flex' }}>
-                    {Pie()}
-                </div></></>
+        <ProSidebarProvider style={{  rtl: 'true', flexDirection: "row-reverse", height: '100%' }} rtl={true}>
+          <Sidebar>
+            <Menu>
+              <SubMenu label="Yearly Goals">
+                {returnYearlyGoals(yearly)}
+              </SubMenu>
+              <SubMenu label="Monthly Goals">
+
+                {returnMonthlyGoals(monthly)}
+              </SubMenu>
+              <SubMenu label="Daily Goals">
+                {returnDailyGoals(daily)}
+              </SubMenu>
+              <MenuItem>
+              </MenuItem>
+        <GoalPopUp />
+            </Menu>
+          </Sidebar>
+                
+        </ProSidebarProvider>
+      </div>
+
+        <div style={{ height: 400, width: '70%', display: 'inline-flex' }}>
+        {MyResponsiveBar()}
+      </div>
+      <div style={{ height: 400, width: '30%', display: 'inline-flex' }}>
+        {Pie()}
+      </div></>
 
     )
 }
