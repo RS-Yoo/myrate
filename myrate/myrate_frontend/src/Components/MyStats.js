@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { ResponsiveBar } from '@nivo/bar'
+import { ResponsivePie } from '@nivo/pie'
 
 const MyStats = () => {
     let [BookStat, setBookStat] = useState(0);
@@ -172,6 +173,47 @@ const MyStats = () => {
       />
   )
 
+  const pieData = [
+    {
+      id: "Books",
+      label: "Books",
+      value: BookStat,
+      color: "hsl(90, 70%, 50%)"
+    },
+    {
+      id: "Movie",
+      label: "Movie",
+      value: MovieStat,
+      color: "hsl(56, 70%, 50%)"
+    },
+    {
+      id: "TV Show",
+      label: "TV Show",
+      value: TVStat,
+      color: "hsl(103, 70%, 50%)"
+    }
+  ];
+
+  const Pie = () => (
+    <ResponsivePie
+      data={pieData}
+      margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+      innerRadius={0.5}
+      padAngle={0.7}
+      cornerRadius={3}
+      activeOuterRadiusOffset={8}
+      borderWidth={1}
+      borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
+      arcLinkLabelsSkipAngle={10}
+      arcLinkLabelsTextColor="#333333"
+      arcLinkLabelsThickness={2}
+      arcLinkLabelsColor={{ from: "color" }}
+      arcLabelsSkipAngle={10}
+      arcLabelsTextColor={{ from: "color", modifiers: [["darker", 2]] }}
+    />
+  )
+
+
 
     return (
         <><dl>
@@ -188,7 +230,10 @@ const MyStats = () => {
         <div style={{ height: 400, width: '70%', display: 'inline-flex' }}>
         {MyResponsiveBar()}
       </div>
-</>
+      <div style={{ height: 400, width: '30%', display: 'inline-flex' }}>
+        {Pie()}
+      </div></>
+
     )
 }
 
