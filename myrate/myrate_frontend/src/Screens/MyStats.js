@@ -2,6 +2,8 @@ import React from "react";
 import Navbar from "../Components/Navbar";
 import MyStats from "../Components/MyStats";
 import { useSelector } from 'react-redux';
+import Card from 'react-bootstrap/Card';
+import Badge from 'react-bootstrap/Badge';
 
 
 const Landing = () => {
@@ -9,7 +11,11 @@ const Landing = () => {
     return (
         <>
             <Navbar />
-            {userProfile.username ? <h2>Viewing Data For: {userProfile.username}</h2> : <h2>Please Login To View User Data</h2>}
+                <Card body>{userProfile.username ? 
+                    <h2> <Badge bg="primary">Viewing Data For: {userProfile.username}</Badge> </h2>  
+                    : 
+                    <h2><Badge bg="danger">Please Login To View User Data</Badge></h2>} 
+                </Card>
             <MyStats />
         </>
     );
