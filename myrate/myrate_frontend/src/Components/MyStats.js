@@ -12,9 +12,7 @@ import Popper from '@mui/material/Popper';
 import NewGoalForm from './NewGoalForm';
 import GoalPopUp from './GoalPopUp';
 import ProgressBar from 'react-bootstrap/ProgressBar';
-
-
-
+import Table from 'react-bootstrap/Table';
 
 const MyStats = () => {
   
@@ -168,7 +166,6 @@ const MyStats = () => {
   
         });
     }, [userProfile]);
-  
 
     const data = [
       {
@@ -184,7 +181,6 @@ const MyStats = () => {
         minutes: TVStat * 16 * 40
       }
     ];
-  
 
     const MyResponsiveBar = () => (
       <ResponsiveBar
@@ -449,15 +445,32 @@ const MyStats = () => {
         <>
         <div style={{ display: 'flex', width: '100%', height: '100%' }}>
         <dl style={{ width: '80%' }}>
-          <dt><strong>Books</strong></dt>
-          <dd><li><i>Amount of Books Read: {BookStat}</i></li></dd>
-          <dd><li><i>Time Spent Reading: {BookStat * 600} mins!</i></li></dd>
-          <dt><strong>Movies</strong></dt>
-          <dd><li><i>Amount of Movies Watched: {MovieStat}</i></li></dd>
-          <dd><li><i>Time Spent Watching Movies: {MovieStat * 110} mins!</i></li></dd>
-          <dt><strong>TV Shows</strong></dt>
-          <dd><li><i>Amount of TV Shows Watched: {TVStat}</i></li></dd>
-          <dd><li><i>Time Spent Watching TV Shows: {TVStat * 16 * 40} mins!</i></li></dd>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Media</th>
+              <th>#</th>
+              <th>Amount of Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Books</td>
+              <td>{BookStat}</td>
+              <td>You have spent around {BookStat * 600} minutes! Which is around {Math.round((BookStat * 600)/60)} hours! Which is about {((BookStat * 600)/1440).toFixed(2)} days!</td>
+            </tr>
+            <tr>
+              <td>Movies</td>
+              <td>{MovieStat}</td>
+              <td>You have spent around {MovieStat * 110} minutes! Which is around {((MovieStat * 110)/60).toFixed(2)} hours! Which is about {((MovieStat * 110)/1440).toFixed(2)} days!</td>
+            </tr>
+            <tr>
+              <td>TV Shows</td>
+              <td>{TVStat}</td>
+              <td>You have spent around {TVStat * 16 * 40} minutes! Which is around {((TVStat * 16 * 40)/60).toFixed(2)} hours! Which is about {((TVStat * 16 * 40)/1440).toFixed(2)} days!</td>
+            </tr>
+          </tbody>
+        </Table>
         </dl>
         <ProSidebarProvider style={{  rtl: 'true', flexDirection: "row-reverse", height: '100%' }} rtl={true}>
           <Sidebar>
