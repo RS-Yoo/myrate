@@ -141,7 +141,7 @@ const SearchBox = (timeFrame, count) => {
             }
             if(rest !== undefined)
             {
-                let length = resm.length;
+                let length = resm?.length;
                 if(length > 5)
                     length = 5;
                 //console.log(rest.length);
@@ -151,7 +151,7 @@ const SearchBox = (timeFrame, count) => {
                     result.push (
                         <div>
                             {
-                                (rest.map(tvshow => (
+                                (rest?.map(tvshow => (
                                     <Dropdown.Item onClick={() => findTV(tvshow)}>
                                         <p >{tvshow.name} (TV Show)</p>
                                         <Dropdown.Divider />
@@ -186,7 +186,7 @@ const SearchBox = (timeFrame, count) => {
                 result.push (
                     <div>
                         {
-                            (res.map(book => (
+                            (res?.map(book => (
                                 <Dropdown.Item onClick={() => findBook(book.key, book.author_name)}>
                                     <p >{book.title} by {book.author_name} (Book)</p>
                                     <Dropdown.Divider />
