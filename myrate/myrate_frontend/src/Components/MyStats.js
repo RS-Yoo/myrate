@@ -35,7 +35,6 @@ const MyStats = () => {
     let [yearlyTVRatings, setYearlyTVRatings] = useState('');
     let [monthlyTVRatings, setMonthlyTVRatings] = useState('');
     let [dailyTVRatings, setDailyTVRatings] = useState('');
-    let [calendarReviewCounts, setCalendarReviewCounts] = useState('');
     let [calFinalData, setCalFinalData] = useState([]);
   
     let yearlyGoals = [];
@@ -45,8 +44,6 @@ const MyStats = () => {
     let calendarDate = [];
     let calendarCount = [];
     const cData = [];
-    const finalData = [];
-    
 
     const [modalOpen, setModalOpen] = useState(false); 
     const userProfile = useSelector((state) => { return state.userProfile; });
@@ -226,15 +223,11 @@ const MyStats = () => {
         console.log(JSON.stringify(fuckthisbullshit));
 
         for(let i = 0; i < fuckthisbullshit.length; i++) {
-          let date = new Date(fuckthisbullshit[i])
           cData.push({
             value: calendarCount[i],
             day: fuckthisbullshit[i],
           });
         }
-
-        console.log(JSON.stringify(cData));
-
         
         cData.map(d => {
           calFinalData.push(d);
@@ -323,17 +316,6 @@ const MyStats = () => {
     />
     )
 
-    //const calendarData = cData
-
-    const calendarData = [
-      {
-        "day":"2023-03-01",
-        "value":2
-      }
-    ]
-
-    console.log("cdata: " + JSON.stringify(cData));
-
     const Calendar = () => (
       <ResponsiveCalendar
         data={calFinalData}
@@ -342,7 +324,7 @@ const MyStats = () => {
         emptyColor="#eeeeee"
         colors={[ '#61cdbb', '#97e3d5', '#e8c1a0', '#f47560' ]}
         minValue={0}
-        maxValue={20}
+        maxValue={10}
         margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
         yearSpacing={40}
         monthBorderColor="#ffffff"
