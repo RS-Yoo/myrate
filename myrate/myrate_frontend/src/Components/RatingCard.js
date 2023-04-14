@@ -54,6 +54,7 @@ const RatingCard = (rating) => {
   const [stars, setStars] = useState('stars');
   const [description, setDescription] = useState('description');
   const [username, setUsername] = useState('username');
+  const [newComment, setNewComment] = useState('');
 
   const handleChange = () => {
 
@@ -86,6 +87,7 @@ const RatingCard = (rating) => {
       media_id: rating.rating.media_id,
       user: rating.rating.user_username,
       likes: likes,
+      comments: rating.rating?.comments,
     }
     
     console.log("rat: " + numLikes);
@@ -113,9 +115,37 @@ const RatingCard = (rating) => {
     setOpen(true);
   };
 
-  const handleClose = () => {
-    // this is where we will save comment to rating in db
+  const handleCloseCancel = () => {
     setOpen(false);
+  };
+
+  const handleCloseSubmit = () => {
+    // this is where we will save comment to rating in db
+    const comments = [];
+    try {
+      comments = rating.rating.comments;
+    }
+    catch {
+
+    }
+    comments.push(newComment);
+    
+    const reviewData = {
+      stars: rating.rating.stars,
+      review: rating.rating.review,
+      media_type: rating.rating.media_type,
+      media_id: rating.rating.media_id,
+      user: rating.rating.user_username,
+      likes: rating.rating?.likes,
+      comments: comments,
+    }
+    axios.post(`http://localhost:5000/rating/update/${rating.rating._id}`, reviewData
+      ).then(response => {
+        console.log("Updated rating");
+      })
+
+    setOpen(false);
+    window.location.reload(false);
   };
 
 
@@ -134,9 +164,9 @@ const RatingCard = (rating) => {
           <IconButton onClick={handleClickOpen}>
             <CommentIcon/>
           </IconButton>
-          <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Comment</DialogTitle>
-            <DialogContent>
+          <Dialog open={open} onClose={handleCloseCancel}>
+            <DialogTitle>New Comment</DialogTitle>
+            <DialogContent id="comment-box">
               <TextField
                 autoFocus
                 margin="dense"
@@ -147,11 +177,12 @@ const RatingCard = (rating) => {
                 multiline
                 fullWidth
                 variant="standard"
+                onChange={e => setNewComment(e.target.value)}
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button onClick={handleClose}>Submit Comment</Button>
+              <Button onClick={handleCloseCancel}>Cancel</Button>
+              <Button onClick={handleCloseSubmit}>Submit Comment</Button>
             </DialogActions>
           </Dialog>
         </div>
