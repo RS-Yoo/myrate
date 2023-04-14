@@ -63,12 +63,12 @@ const CompletionDate = (props) => {
                 let compData = {
                     date: day,
                     media_id: props.mediaId,
+                    media_type: props.mediaType,
                     user: userProfile.username
                 }
                 axios.post(`http://localhost:5000/add`, compData
                 ).then(response => {
-                    console.log("Posted completiondate");
-                    toast('Completion Date Saved!', {position: toast.POSITION.TOP_CENTER});
+                    window.location.reload(false);
                 }).catch(response => {
                     console.log("Error saving rating: " + response);
                     toast('Error updating. Please try again.', {position: toast.POSITION.TOP_CENTER});

@@ -245,7 +245,7 @@ useEffect(() => {
             <Navbar />
             <div style={{float:'right', padding:'20px'}}>
                 <div style={{marginTop:'20px'}}>
-                    <CompletionDate mediaId={mediaId}/>
+                    <CompletionDate mediaId={mediaId} mediaType={'books'}/>
                 </div>
             </div>
             <div className="bookDiv">
