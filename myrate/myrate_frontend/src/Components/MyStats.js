@@ -15,6 +15,7 @@ import NewGoalForm from './NewGoalForm';
 import GoalPopUp from './GoalPopUp';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import Table from 'react-bootstrap/Table';
+import { element } from "prop-types";
 
 const MyStats = () => {
   
@@ -34,11 +35,17 @@ const MyStats = () => {
     let [yearlyTVRatings, setYearlyTVRatings] = useState('');
     let [monthlyTVRatings, setMonthlyTVRatings] = useState('');
     let [dailyTVRatings, setDailyTVRatings] = useState('');
+    let [calendarReviewCounts, setCalendarReviewCounts] = useState('');
   
     let yearlyGoals = [];
     let monthlyGoals = [];
     let dailyGoals = [];
-  
+
+    let calendarDate = [];
+    let calendarCount = [];
+    const cData = [];
+    const finalData = [];
+    
 
     const [modalOpen, setModalOpen] = useState(false); 
     const userProfile = useSelector((state) => { return state.userProfile; });
@@ -57,7 +64,6 @@ const MyStats = () => {
       return prevMonth;
     }
   
-
     // Fetch Ratings data of this user from the backend
     useEffect(() => {
       axios.get(`http://localhost:5000/rating/findstatrating`, {
@@ -89,7 +95,7 @@ const MyStats = () => {
             let ratingDate = new Date(d["timestamp_day"]);
             if (d["media_type"] === "books") {
               bs++;
-              console.log("year for book: " + ratingDate.getFullYear());
+              // console.log("year for book: " + ratingDate.getFullYear());
               if(ratingDate.getFullYear() === lastYear)
               {
                 byr++;
@@ -167,6 +173,73 @@ const MyStats = () => {
           setDaily(dailyGoals);
   
         });
+    }, [userProfile]);
+
+    useEffect(() => {
+      axios.get(`http://localhost:5000/completed/findstatcompleted/`, {
+        params: {
+          username: userProfile.username
+        },
+      })
+      .then(function (response) {
+        let count = 1;
+        let year = 0;
+        let month = 0;
+        let day = 0;
+        //console.log("test: " + JSON.stringify(response));
+
+        response.data.map(d => {
+          let setDate = new Date(d["date"]);
+
+          year = setDate.getFullYear();
+          month = setDate.getMonth();
+          if(month.toString().length === 1) {
+            month = "0" + month;
+          }
+          day = setDate.getDay();
+          if(day.toString().length === 1) {
+            day = "0" + day;
+          }
+          // console.log("date => year: " + year + " month: " + month + " day: " + day);
+          calendarDate.push("" + year + "-" + month + "-" + day);
+        })
+
+        let temp = new Set(calendarDate);
+        let fuckthisbullshit = [];
+        for(const element of temp) {
+          fuckthisbullshit.push(element);
+        }
+
+        let length = calendarDate.length;
+        for(let i = 0; i < fuckthisbullshit.length - 1; i++) {
+          count = 0;
+          for(let j = 0; j < length; j++) {
+            if(fuckthisbullshit[i] === calendarDate[j]) {
+              count++;
+            }
+          }
+          calendarCount.push(count);
+        }
+
+        console.log(JSON.stringify(calendarCount));
+        console.log(JSON.stringify(fuckthisbullshit));
+
+        for(let i = 0; i < fuckthisbullshit.length; i++) {
+          let date = new Date(fuckthisbullshit[i])
+          cData.push({
+            value: calendarCount[i],
+            day: date
+          });
+        }
+
+        console.log(JSON.stringify(cData));
+
+        
+        cData.map(d => {
+          finalData.push(d);
+        });
+
+      });
     }, [userProfile]);
 
     const data = [
@@ -249,9 +322,18 @@ const MyStats = () => {
     />
     )
 
+    //const calendarData = cData
+
+    const calendarData = [
+      {
+        "day":"2023-03-01",
+        "value":2
+      }
+    ]
+
     const Calendar = () => (
       <ResponsiveCalendar
-        data={calendarData}
+        data={cData}
         from="2020-04-01"
         to="2023-12-31"
         emptyColor="#eeeeee"
@@ -280,7 +362,7 @@ const MyStats = () => {
 
     function editGoal(goal) {
     // set GoalName, MediaType, TimeGoal, Positive, Amount of state
-    console.log("In edit rating");  
+    // console.log("In edit rating");  
     return (
       <Popper position="left center" >
         <div>
@@ -297,7 +379,7 @@ const MyStats = () => {
     }
 
     function returnDailyGoals(goals) {
-    console.log(JSON.stringify(goals));
+    // console.log(JSON.stringify(goals));
     try {
       let goalSats = [];
       goals.map(function (g) {
@@ -356,7 +438,7 @@ const MyStats = () => {
     }
 
     function returnMonthlyGoals(goals) {
-    console.log(JSON.stringify(goals));
+    // console.log(JSON.stringify(goals));
     try {
       let goalSats = [];
       goals.map(function (g) {
@@ -414,7 +496,7 @@ const MyStats = () => {
     }
 
     function returnYearlyGoals(goals) {
-    console.log(JSON.stringify(goals));
+    // console.log(JSON.stringify(goals));
     try {
       let goalSats = [];
       goals.map(function (g) {
@@ -470,13 +552,6 @@ const MyStats = () => {
 
     }
     }
-
-    const calendarData = [
-      {
-        "value": 389,
-        "day": "2015-05-11"
-      }
-    ]
 
     return (
         <>
