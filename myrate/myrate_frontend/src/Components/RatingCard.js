@@ -123,12 +123,14 @@ const RatingCard = (rating) => {
     // this is where we will save comment to rating in db
     const comments = [];
     try {
-      comments = rating.rating.comments;
+      rating.rating.comments.map(c => {
+        comments.push(c);
+      })
     }
     catch {
-
+      console.log("error setting comments");
     }
-    comments.push(newComment);
+    comments.push({"user": userProfile.username, "comment" : newComment});
     
     const reviewData = {
       stars: rating.rating.stars,
@@ -148,6 +150,35 @@ const RatingCard = (rating) => {
     window.location.reload(false);
   };
 
+  const getFooterComments = () => {
+    let retVal = [];
+    try {
+      let comments = rating.rating.comments;
+      if(comments.length > 0)
+      {
+        comments.map(c => {
+
+          retVal.push (
+            <div>
+              <MDBCardFooter background='transparent' border='dark'>
+                <h5>{c?.user}</h5>
+                <div>
+                  <a>{c?.comment}</a>
+                </div>
+            </MDBCardFooter>
+
+            </div>
+          );
+        }
+          
+          )
+      }
+    }
+    catch {
+
+    }
+    return retVal;
+  }
 
   return (
     <MDBCard>
@@ -186,6 +217,7 @@ const RatingCard = (rating) => {
             </DialogActions>
           </Dialog>
         </div>
+        {getFooterComments()}
       </MDBCardBody>
     </MDBCard>
   );
