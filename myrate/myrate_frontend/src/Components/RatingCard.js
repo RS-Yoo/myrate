@@ -8,6 +8,17 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 import axios from "axios";
 
+// used for adding comments
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
+import CommentIcon from '@mui/icons-material/Comment';
+
 import {
   MDBCard,
   MDBCardHeader,
@@ -96,6 +107,18 @@ const RatingCard = (rating) => {
       })
   }
 
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    // this is where we will save comment to rating in db
+    setOpen(false);
+  };
+
+
   return (
     <MDBCard>
       <MDBCardHeader>
@@ -107,7 +130,30 @@ const RatingCard = (rating) => {
         <div>
           <Checkbox checked={liked}
             onChange={handleChange} name="customized-color" icon={<FavoriteBorder />} color="secondary" checkedIcon={<Favorite />} />
-            <a>{numLikes}</a>
+          <a>{numLikes}</a>
+          <IconButton onClick={handleClickOpen}>
+            <CommentIcon/>
+          </IconButton>
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>Comment</DialogTitle>
+            <DialogContent>
+              <TextField
+                autoFocus
+                margin="dense"
+                required
+                id="outlined-required"
+                label="Required"
+                defaultValue=""
+                multiline
+                fullWidth
+                variant="standard"
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
+              <Button onClick={handleClose}>Submit Comment</Button>
+            </DialogActions>
+          </Dialog>
         </div>
       </MDBCardBody>
     </MDBCard>
