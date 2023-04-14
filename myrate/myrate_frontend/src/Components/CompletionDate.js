@@ -5,7 +5,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useSelector } from 'react-redux';
 import {Button} from '@mui/material'
 import {toast} from 'react-toastify';
-import { Dayjs } from 'dayjs';
+import Box from '@mui/material/Box';
 import axios from "axios";
 
 const CompletionDate = (props) => {
@@ -34,13 +34,19 @@ const CompletionDate = (props) => {
     const returnCompletions = () => {
         console.log("in return completions for user " + userProfile.username);
         let res = [];
-        compDates?.map(r => (
+        let temp = compDates?.toSorted((a, b) => new Date(a?.date) - new Date(b?.date));
+        temp?.map(r => (
                     res.push (
                     <><div>
                         <a>{new Date(r.date).toDateString()}</a><Button onClick={() => removeDate(r._id)}> Remove Date </Button>
                         </div></>
                     )
                 ))
+        // if the user has not yet completed this media add placeholder
+        if(res.length === 0)
+        {
+            res.push(<><div><a>Not completed yet!</a></div></>)
+        }
         return res;
     }
 
@@ -84,11 +90,13 @@ const CompletionDate = (props) => {
     return (
         <>
         <div>
-            <h3> Previous completion dates:</h3>
+            <h3> Previous Completion Dates:</h3>
         </div>
         <div>
-            {returnCompletions()}
-        </div>
+                <Box sx={{ p: 2, border: '1px dashed grey' }}>
+                    {returnCompletions()}
+                </Box>
+            </div>
         <div>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
@@ -104,7 +112,7 @@ const CompletionDate = (props) => {
                     }} />
             </LocalizationProvider>
         </div>
-            <Button onClick={() => saveDate(date)}> Save New Date</Button>
+            <Button  variant="contained" onClick={() => saveDate(date)}> Save New Date</Button>
             </>
     );
 }
