@@ -13,6 +13,11 @@ import Box from '@mui/material/Box';
 import StarIcon from '@mui/icons-material/Star';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CompletionDate from "../Components/CompletionDate"
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 
 const SecondaryBook = () => {
@@ -73,6 +78,10 @@ const SecondaryBook = () => {
     let ratingsList = null;
     
     toast.configure();
+
+useEffect(() => {
+    axios.get()
+})
 
 
     useEffect(() => {
@@ -213,6 +222,12 @@ const SecondaryBook = () => {
             window.location.reload(false);
         })
     }
+
+    const getReadDates = () => {
+        return (
+            <a>today!</a>
+        );
+    }
     /*
     // get list of ratings for this book
     ratingsList = axios.get(`http://localhost:5000/rating/findrating`, {
@@ -228,10 +243,16 @@ const SecondaryBook = () => {
     return (
         <>
             <Navbar />
+            <div style={{float:'right', padding:'20px'}}>
+                <div style={{marginTop:'20px'}}>
+                    <CompletionDate mediaId={mediaId}/>
+                </div>
+            </div>
             <div className="bookDiv">
                 <div className="bookImageDiv">
                     <img src={image} height="325" width="200" />
                 </div>
+
                 {purchaseLinks.map(link => (
                     <div className="purchaseLinkDiv">
                         <a href={link.url} target="_blank">
