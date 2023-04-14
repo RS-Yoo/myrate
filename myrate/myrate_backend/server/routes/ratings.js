@@ -107,6 +107,7 @@ ratingRoutes.route("/rating/add").post(function (req, response) {
     media_id: ObjectId(req.body.media_id),
     user_username: req.body.user,
     timestamp_day: day,
+    likes: req.body.likes,
  };
  console.log(myobj);
  db_connect.collection("ratings").insertOne(myobj, function (err, res) {
@@ -128,6 +129,7 @@ ratingRoutes.route("/rating/update/:id").post(function (req, response) {
     media_id: ObjectId(req.body.media_id),
     user_username: req.body.user,
     timestamp_day: day,
+    likes: req.body.likes,
    },
  };
  db_connect
