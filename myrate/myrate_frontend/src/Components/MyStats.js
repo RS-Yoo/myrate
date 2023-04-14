@@ -36,6 +36,7 @@ const MyStats = () => {
     let [monthlyTVRatings, setMonthlyTVRatings] = useState('');
     let [dailyTVRatings, setDailyTVRatings] = useState('');
     let [calendarReviewCounts, setCalendarReviewCounts] = useState('');
+    let [calFinalData, setCalFinalData] = useState([]);
   
     let yearlyGoals = [];
     let monthlyGoals = [];
@@ -228,7 +229,7 @@ const MyStats = () => {
           let date = new Date(fuckthisbullshit[i])
           cData.push({
             value: calendarCount[i],
-            day: date
+            day: fuckthisbullshit[i],
           });
         }
 
@@ -236,7 +237,7 @@ const MyStats = () => {
 
         
         cData.map(d => {
-          finalData.push(d);
+          calFinalData.push(d);
         });
 
       });
@@ -331,9 +332,11 @@ const MyStats = () => {
       }
     ]
 
+    console.log("cdata: " + JSON.stringify(cData));
+
     const Calendar = () => (
       <ResponsiveCalendar
-        data={cData}
+        data={calFinalData}
         from="2020-04-01"
         to="2023-12-31"
         emptyColor="#eeeeee"
