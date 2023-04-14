@@ -15,9 +15,11 @@ import Avatar from 'react-avatar';
 import axios from "axios";
 // Importing toastify module
 import {toast} from 'react-toastify';
+import Table from 'react-bootstrap/Table';
  
 // Import toastify css file
 import 'react-toastify/dist/ReactToastify.css';
+import MyStats from './MyStats';
  
 
 export default function ProfileDetail() {
@@ -109,7 +111,9 @@ useEffect(() => {
                 </MDBRow>
 
                 <div className="d-flex justify-content-between align-items-center mb-4">
-                  <MDBCardText className="lead fw-normal mb-2">MyStats</MDBCardText>
+                  <MDBCardText className="lead fw-normal mb-2">
+                    <MyStats />
+                    </MDBCardText>
                 </div>
                 <MDBRow className="d-flex justify-content-center align-items-center">
                   <MDBCol className="mb-2">
