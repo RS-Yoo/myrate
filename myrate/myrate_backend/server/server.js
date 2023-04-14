@@ -11,6 +11,8 @@ app.use(require("./routes/tvshow"));
 app.use(require("./routes/ratings"));
 app.use(require("./routes/collection"));
 app.use(require("./routes/user"));
+app.use(require("./routes/goal"));
+app.use(require("./routes/completed"));
 // get driver connection
 const dbo = require("./db/conn");
  

@@ -8,6 +8,7 @@ import RelatedTitlesSliderList from "../Components/RelatedTitlesSliderList";
 import ReviewForm from "../Components/ReviewForm";
 import CollectionModal from "../Components/Modals/CollectionModal"
 import ReviewList from "../Components/ReviewList";
+import CompletionDate from "../Components/CompletionDate";
 
 const SecondaryTV = (props) => {
 
@@ -149,7 +150,11 @@ const SecondaryTV = (props) => {
     return (
         <>
             <Navbar />
-
+            <div style={{float:'right', padding:'20px'}}>
+                <div style={{marginTop:'20px'}}>
+                    <CompletionDate mediaId={mediaId} mediaType={'books'}/>
+                </div>
+            </div>
             <div className="bookDiv">
                 <div className="bookImageDiv">
                     <img src={`${prePosterPath}${poster_path}`} height="275" width="175" />
