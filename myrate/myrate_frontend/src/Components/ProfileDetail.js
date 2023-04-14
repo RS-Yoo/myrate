@@ -20,6 +20,7 @@ import Table from 'react-bootstrap/Table';
 // Import toastify css file
 import 'react-toastify/dist/ReactToastify.css';
 import MyStats from './MyStats';
+import {Link} from 'react-router-dom';
  
 
 export default function ProfileDetail() {
@@ -118,6 +119,15 @@ useEffect(() => {
                 <MDBRow className="d-flex justify-content-center align-items-center">
                   <MDBCol className="mb-2">
                     <MDBCardText className="font-italic mb-1">To be implemented</MDBCardText>
+                  </MDBCol>
+                </MDBRow>
+
+                <div className="d-flex justify-content-between align-items-center mb-4">
+                  <MDBCardText className="lead fw-normal mb-2">MyHealth</MDBCardText>
+                </div>
+                <MDBRow className="d-flex justify-content-center align-items-center">
+                  <MDBCol className="mb-2">
+                    <Link to='../MyHealth'>Click here to view details about MyHealth!</Link>
                   </MDBCol>
                 </MDBRow>
               </MDBCardBody>
