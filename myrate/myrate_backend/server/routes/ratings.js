@@ -108,6 +108,7 @@ ratingRoutes.route("/rating/add").post(function (req, response) {
     user_username: req.body.user,
     timestamp_day: day,
     likes: req.body.likes,
+    comments: req.body.comments,
  };
  console.log(myobj);
  db_connect.collection("ratings").insertOne(myobj, function (err, res) {
@@ -130,13 +131,14 @@ ratingRoutes.route("/rating/update/:id").post(function (req, response) {
     user_username: req.body.user,
     timestamp_day: day,
     likes: req.body.likes,
+    comments: req.body.comments,
    },
  };
  db_connect
    .collection("ratings")
    .updateOne(myquery, newvalues, function (err, res) {
      if (err) throw err;
-     console.log("1 rating updated");
+     console.log("1 rating updated: " + req.body.comments);
      response.json(res);
    });
 });

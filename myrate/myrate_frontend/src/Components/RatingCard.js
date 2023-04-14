@@ -8,6 +8,17 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 import axios from "axios";
 
+// used for adding comments
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
+import CommentIcon from '@mui/icons-material/Comment';
+
 import {
   MDBCard,
   MDBCardHeader,
@@ -43,6 +54,7 @@ const RatingCard = (rating) => {
   const [stars, setStars] = useState('stars');
   const [description, setDescription] = useState('description');
   const [username, setUsername] = useState('username');
+  const [newComment, setNewComment] = useState('');
 
   const handleChange = () => {
 
@@ -75,6 +87,7 @@ const RatingCard = (rating) => {
       media_id: rating.rating.media_id,
       user: rating.rating.user_username,
       likes: likes,
+      comments: rating.rating?.comments,
     }
     
     console.log("rat: " + numLikes);
@@ -96,6 +109,77 @@ const RatingCard = (rating) => {
       })
   }
 
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleCloseCancel = () => {
+    setOpen(false);
+  };
+
+  const handleCloseSubmit = () => {
+    // this is where we will save comment to rating in db
+    const comments = [];
+    try {
+      rating.rating.comments.map(c => {
+        comments.push(c);
+      })
+    }
+    catch {
+      console.log("error setting comments");
+    }
+    comments.push({"user": userProfile.username, "comment" : newComment});
+    
+    const reviewData = {
+      stars: rating.rating.stars,
+      review: rating.rating.review,
+      media_type: rating.rating.media_type,
+      media_id: rating.rating.media_id,
+      user: rating.rating.user_username,
+      likes: rating.rating?.likes,
+      comments: comments,
+    }
+    axios.post(`http://localhost:5000/rating/update/${rating.rating._id}`, reviewData
+      ).then(response => {
+        console.log("Updated rating");
+      })
+
+    setOpen(false);
+    window.location.reload(false);
+  };
+
+  const getFooterComments = () => {
+    let retVal = [];
+    try {
+      let comments = rating.rating.comments;
+      if(comments.length > 0)
+      {
+        comments.map(c => {
+
+          retVal.push (
+            <div>
+              <MDBCardFooter background='transparent' border='dark'>
+                <h5>{c?.user}</h5>
+                <div>
+                  <a>{c?.comment}</a>
+                </div>
+            </MDBCardFooter>
+
+            </div>
+          );
+        }
+          
+          )
+      }
+    }
+    catch {
+
+    }
+    return retVal;
+  }
+
   return (
     <MDBCard>
       <MDBCardHeader>
@@ -107,8 +191,33 @@ const RatingCard = (rating) => {
         <div>
           <Checkbox checked={liked}
             onChange={handleChange} name="customized-color" icon={<FavoriteBorder />} color="secondary" checkedIcon={<Favorite />} />
-            <a>{numLikes}</a>
+          <a>{numLikes}</a>
+          <IconButton onClick={handleClickOpen}>
+            <CommentIcon/>
+          </IconButton>
+          <Dialog open={open} onClose={handleCloseCancel}>
+            <DialogTitle>New Comment</DialogTitle>
+            <DialogContent id="comment-box">
+              <TextField
+                autoFocus
+                margin="dense"
+                required
+                id="outlined-required"
+                label="Required"
+                defaultValue=""
+                multiline
+                fullWidth
+                variant="standard"
+                onChange={e => setNewComment(e.target.value)}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCloseCancel}>Cancel</Button>
+              <Button onClick={handleCloseSubmit}>Submit Comment</Button>
+            </DialogActions>
+          </Dialog>
         </div>
+        {getFooterComments()}
       </MDBCardBody>
     </MDBCard>
   );
