@@ -190,15 +190,15 @@ const MyStats = () => {
           let setDate = new Date(d["date"]);
 
           year = setDate.getFullYear();
-          month = setDate.getMonth();
+          month = setDate.getMonth() + 1;
           if(month.toString().length === 1) {
             month = "0" + month;
           }
-          day = setDate.getDay();
+          day = setDate.getDate();
           if(day.toString().length === 1) {
             day = "0" + day;
           }
-          // console.log("date => year: " + year + " month: " + month + " day: " + day);
+          //console.log("date => year: " + year + " month: " + month + " day: " + day);
           calendarDate.push("" + year + "-" + month + "-" + day);
         })
 
@@ -316,10 +316,12 @@ const MyStats = () => {
     />
     )
 
+    console.log(JSON.stringify(calFinalData));
+
     const Calendar = () => (
       <ResponsiveCalendar
         data={calFinalData}
-        from="2020-04-01"
+        from="2020-01-02"
         to="2023-12-31"
         emptyColor="#eeeeee"
         colors={[ '#61cdbb', '#97e3d5', '#e8c1a0', '#f47560' ]}
