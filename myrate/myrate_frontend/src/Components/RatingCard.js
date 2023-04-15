@@ -29,6 +29,7 @@ import {
   MDBCardFooter
 } from 'mdb-react-ui-kit';
 import StarRating from "./StarRating";
+import BasicSpeedDial from "./BasicSpeedDial";
 
 const RatingCard = (rating) => {
   const userProfile = useSelector((state) => { return state.userProfile; });
@@ -216,6 +217,7 @@ const RatingCard = (rating) => {
               <Button onClick={handleCloseSubmit}>Submit Comment</Button>
             </DialogActions>
           </Dialog>
+          <BasicSpeedDial rating = {rating.rating}/>
         </div>
         {getFooterComments()}
       </MDBCardBody>

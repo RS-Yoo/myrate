@@ -9,4 +9,13 @@ In the second terminal navigate into myrate/myrate_frontend and start our applic
 At this point MyRate will open in your preferred browser and is ready to go.
 
 ## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+MyRate is in its final stage and merely polishing details.
+
+### Feature List:
+* Landing page displays trending media for books, movies, tv shows
+* Secondary pages display user ratings/reviews and allow users to update read dates
+* Search box fully functional and secondary search page allows users to sort by media with pagination
+* Collections is polished and allows users full CRUD modification
+* MyStats is polished and allows users to create/view goals as well as view stats for daily, monthly, yearly consumption
+* Profile page updated to include summary of all data from MyRate
+* MyHealth is included in user profiles

@@ -9,6 +9,8 @@ import ReviewForm from "../Components/ReviewForm";
 import CollectionModal from "../Components/Modals/CollectionModal";
 import ReviewList from "../Components/ReviewList";
 import CompletionDate from "../Components/CompletionDate";
+import Tooltip from '@mui/material/Tooltip';
+import Rating from '@mui/material/Rating';
 
 const SecondaryMovie = (props) => {
 
@@ -18,6 +20,8 @@ const SecondaryMovie = (props) => {
     const [apiId, setApiId] = useState();
     const [reviewId, setReviewId] = useState();
     const [modalOpen, setModalOpen] = useState(false); 
+    
+    const [reviews, setReviews] = useState();
 
     const userProfile = useSelector((state) => { return state.userProfile; });
 
@@ -33,7 +37,19 @@ const SecondaryMovie = (props) => {
         api_id: movieDetails['movie'].id,
     };
 
-
+    useEffect(() => {
+        axios.get(`http://localhost:5000/rating/findothers`, {
+                params: {
+                    media_id: mediaId,
+                },
+            }).then((response) => {
+                console.log("found reviews", response);
+                const res = ((response.data));
+                setReviews(res);
+            }).catch(response => {
+                console.log("Error getting ratings: " + response);
+            })
+    }, [mediaId])
 
     const openModal = () => {
         setModalOpen(true);
@@ -167,7 +183,13 @@ const SecondaryMovie = (props) => {
                 </div>
             </div>
             <div className="productDetailsDiv">
-                <h5 className="productDetailsHeader">Product Details</h5>
+                <h5 className="productDetailsHeader">Product Details | 
+                    <Tooltip title={"Average Rating: " + reviews?.reduce((total, next) => total + parseFloat(next?.stars), 0) / reviews?.length}>
+                        <div style={{ display: 'inline-block' }}>
+                            <Rating name="read-only" value={reviews?.reduce((total, next) => total + parseFloat(next?.stars), 0) / reviews?.length} precision={0.1} readOnly />
+                        </div>
+                    </Tooltip>
+                | {reviews?.length} Reviews</h5>
                 <hr class="solid" />
                 <div className="titleInfoDiv">
                     <p><strong>Title: </strong>{title}</p>

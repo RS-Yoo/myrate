@@ -9,6 +9,8 @@ import ReviewForm from "../Components/ReviewForm";
 import CollectionModal from "../Components/Modals/CollectionModal"
 import ReviewList from "../Components/ReviewList";
 import CompletionDate from "../Components/CompletionDate";
+import Rating from '@mui/material/Rating';
+import Tooltip from '@mui/material/Tooltip';
 
 const SecondaryTV = (props) => {
 
@@ -18,12 +20,27 @@ const SecondaryTV = (props) => {
     const [apiId, setApiId] = useState();
     const [reviewId, setReviewId] = useState();
     const [modalOpen, setModalOpen] = useState(false); 
+    const [reviews, setReviews] = useState();
 
     const userProfile = useSelector((state) => { return state.userProfile; });
 
     const location = useLocation();
     const { tvDetails } = location.state;
     const { name, overview, poster_path, first_air_date, _id } = tvDetails['tvshow'];
+
+    useEffect(() => {
+        axios.get(`http://localhost:5000/rating/findothers`, {
+                params: {
+                    media_id: mediaId,
+                },
+            }).then((response) => {
+                console.log("found reviews", response);
+                const res = ((response.data));
+                setReviews(res);
+            }).catch(response => {
+                console.log("Error getting ratings: " + response);
+            })
+    }, [mediaId])
 
     // Saves movie to database
     const newTVShow = {
@@ -165,7 +182,13 @@ const SecondaryTV = (props) => {
                 </div>
             </div>
             <div className="productDetailsDiv">
-                <h5 className="productDetailsHeader">Product Details</h5>
+                <h5 className="productDetailsHeader">Product Details | 
+                    <Tooltip title={"Average Rating: " + reviews?.reduce((total, next) => total + parseFloat(next?.stars), 0) / reviews?.length}>
+                        <div style={{ display: 'inline-block' }}>
+                            <Rating name="read-only" value={reviews?.reduce((total, next) => total + parseFloat(next?.stars), 0) / reviews?.length} precision={0.1} readOnly />
+                        </div>
+                    </Tooltip>
+                | {reviews?.length} Reviews</h5>
                 <hr class="solid" />
                 <div className="titleInfoDiv">
                     <p><strong>Title: </strong>{name}</p>
