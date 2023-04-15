@@ -14,6 +14,7 @@ import StarIcon from '@mui/icons-material/Star';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CompletionDate from "../Components/CompletionDate"
+import Tooltip from '@mui/material/Tooltip';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -28,6 +29,29 @@ const SecondaryBook = () => {
     const [modalOpen, setModalOpen] = useState(false); 
     //const [value, setValue] = useState(2);
     const [hover, setHover] = useState(-1);
+    const [reviews, setReviews] = useState();
+    let avgRating = 0;
+
+    function calcAvgRating() {
+        avgRating = 0;
+        reviews.map(r => {
+            avgRating += r?.stars;
+        })
+    }
+
+    useEffect(() => {
+        axios.get(`http://localhost:5000/rating/findothers`, {
+                params: {
+                    media_id: mediaId,
+                },
+            }).then((response) => {
+                console.log("found reviews", response);
+                const res = ((response.data));
+                setReviews(res);
+            }).catch(response => {
+                console.log("Error getting ratings: " + response);
+            })
+    }, [mediaId])
 
     const userProfile = useSelector((state) => { return state.userProfile; });
 
@@ -228,6 +252,13 @@ useEffect(() => {
             <a>today!</a>
         );
     }
+
+    console.log("avg: " + reviews?.reduce((total, next) => total + next?.stars, 0)/reviews?.length);
+    console.log("length: " + reviews?.length);
+    console.log("sum: " + reviews?.reduce((total, next) => total + parseInt(next?.stars), 0));
+    reviews?.map(r => {
+        console.log(r?.stars);
+    })
     /*
     // get list of ratings for this book
     ratingsList = axios.get(`http://localhost:5000/rating/findrating`, {
@@ -266,7 +297,13 @@ useEffect(() => {
                 </div>
             </div>
             <div className="productDetailsDiv">
-                <h5 className="productDetailsHeader">Product Details</h5>
+                <h5 className="productDetailsHeader">Product Details | 
+                    <Tooltip title={"Average Rating: " + reviews?.reduce((total, next) => total + parseInt(next?.stars), 0) / reviews?.length}>
+                        <div style={{ display: 'inline-block' }}>
+                            <Rating name="read-only" value={reviews?.reduce((total, next) => total + parseInt(next?.stars), 0) / reviews?.length} precision={0.1} readOnly />
+                        </div>
+                    </Tooltip>
+                | {reviews?.length} Reviews</h5>
                 <hr class="solid" />
                 <div className="titleInfoDiv">
                     {bookTitle && <p><strong>Title: </strong>{toTitleCase(bookTitle)}</p>}
