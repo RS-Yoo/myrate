@@ -12,10 +12,10 @@ At this point MyRate will open in your preferred browser and is ready to go.
 MyRate is in its final stage and merely polishing details.
 
 ### Feature List:
--Landing page displays trending media for books, movies, tv shows
--Secondary pages display user ratings/reviews and allow users to update read dates
--Search box fully functional and secondary search page allows users to sort by media with pagination
--Collections is polished and allows users full CRUD modification
--MyStats is polished and allows users to create/view goals as well as view stats for daily, monthly, yearly consumption
--Profile page updated to include summary of all data from MyRate
--MyHealth is included in user profiles
+*Landing page displays trending media for books, movies, tv shows
+*Secondary pages display user ratings/reviews and allow users to update read dates
+*Search box fully functional and secondary search page allows users to sort by media with pagination
+*Collections is polished and allows users full CRUD modification
+*MyStats is polished and allows users to create/view goals as well as view stats for daily, monthly, yearly consumption
+*Profile page updated to include summary of all data from MyRate
+*MyHealth is included in user profiles
