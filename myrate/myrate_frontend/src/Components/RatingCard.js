@@ -217,7 +217,7 @@ const RatingCard = (rating) => {
               <Button onClick={handleCloseSubmit}>Submit Comment</Button>
             </DialogActions>
           </Dialog>
-          <BasicSpeedDial/>
+          <BasicSpeedDial rating = {rating.rating}/>
         </div>
         {getFooterComments()}
       </MDBCardBody>
