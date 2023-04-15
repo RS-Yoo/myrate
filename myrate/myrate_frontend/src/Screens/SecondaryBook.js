@@ -30,14 +30,6 @@ const SecondaryBook = () => {
     //const [value, setValue] = useState(2);
     const [hover, setHover] = useState(-1);
     const [reviews, setReviews] = useState();
-    let avgRating = 0;
-
-    function calcAvgRating() {
-        avgRating = 0;
-        reviews.map(r => {
-            avgRating += r?.stars;
-        })
-    }
 
     useEffect(() => {
         axios.get(`http://localhost:5000/rating/findothers`, {
@@ -253,12 +245,6 @@ useEffect(() => {
         );
     }
 
-    console.log("avg: " + reviews?.reduce((total, next) => total + next?.stars, 0)/reviews?.length);
-    console.log("length: " + reviews?.length);
-    console.log("sum: " + reviews?.reduce((total, next) => total + parseInt(next?.stars), 0));
-    reviews?.map(r => {
-        console.log(r?.stars);
-    })
     /*
     // get list of ratings for this book
     ratingsList = axios.get(`http://localhost:5000/rating/findrating`, {
@@ -298,9 +284,9 @@ useEffect(() => {
             </div>
             <div className="productDetailsDiv">
                 <h5 className="productDetailsHeader">Product Details | 
-                    <Tooltip title={"Average Rating: " + reviews?.reduce((total, next) => total + parseInt(next?.stars), 0) / reviews?.length}>
+                    <Tooltip title={"Average Rating: " + reviews?.reduce((total, next) => total + parseFloat(next?.stars), 0) / reviews?.length}>
                         <div style={{ display: 'inline-block' }}>
-                            <Rating name="read-only" value={reviews?.reduce((total, next) => total + parseInt(next?.stars), 0) / reviews?.length} precision={0.1} readOnly />
+                            <Rating name="read-only" value={reviews?.reduce((total, next) => total + parseFloat(next?.stars), 0) / reviews?.length} precision={0.1} readOnly />
                         </div>
                     </Tooltip>
                 | {reviews?.length} Reviews</h5>
